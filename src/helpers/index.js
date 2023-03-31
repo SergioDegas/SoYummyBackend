@@ -6,4 +6,4 @@ module.exports = {
   handleMongooseError,
   httpError,
   ctrlWrapper,
-} 
+};
