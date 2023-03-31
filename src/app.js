@@ -31,7 +31,7 @@ app.use(
     if (details) {
       result.details = details;
     }
-    res.status(status).json({ message });
+    res.status(status).json(result);
   }
 );
 
