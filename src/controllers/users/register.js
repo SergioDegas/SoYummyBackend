@@ -9,7 +9,6 @@ const register = async (req, res) => {
   if (user) {
     throw httpError(409, 'Email in use');
   }
-  const createHashPassword = await bcrypt.hash(password, 10);
   const verificationToken = uid();
   const newUser = await User.create({
     name,
