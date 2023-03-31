@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { validateBody } = require('../../middlewares');
-const { schemas } = require('../../model/user');
-const {register, login} = require("../../controllers/users")
+const {
+  validateBody,
+  isBodyNotEmpty,
+  schemaValidator,
+} = require('../../middlewares');
+const { register, login } = require('../../controllers/users');
 
-
-router.post("/register", validateBody(schemas.registerSchema), register);
-router.post("/login", validateBody(schemas.loginSchema), login);
+router.post('/register', isBodyNotEmpty(), schemaValidator, register);
+router.post('/login', isBodyNotEmpty(), schemaValidator, login);
 
 module.exports = router;

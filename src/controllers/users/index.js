@@ -1,7 +1,8 @@
-const { register } = require("./register");
-const { login } = require("./login");
+const register = require('./register');
+const login = require('./login');
+const { ctrlWrapper } = require('../../helpers');
 
 module.exports = {
-  register,
-  login
-}
+  register: ctrlWrapper(register),
+  login: ctrlWrapper(login),
+};
