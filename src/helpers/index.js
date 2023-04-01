@@ -4,8 +4,10 @@ const ctrlWrapper = require("./ctrlWrapper");
 const categories = require("./categories");
 
 module.exports = {
+
     handleMongooseError,
     httpError,
     ctrlWrapper,
     categories,
 };
+

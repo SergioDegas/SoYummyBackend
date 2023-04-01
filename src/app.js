@@ -22,19 +22,21 @@ app.use((req, res) => {
 });
 
 app.use(
-    (
-        { status = 500, message = "Internal Server Error", details = null },
-        req,
-        res,
-        next
-    ) => {
-        const result = { message };
 
-        if (details) {
-            result.details = details;
-        }
-        res.status(status).json(result);
-    }
+  (
+    { status = 500, message = 'Internal Server Error', details = null },
+    req,
+    res,
+    next
+  ) => {
+    const result = { message };
+
+    if (details) {
+      result.details = details;
+    };
+    res.status(status).json(result);
+  }
+
 );
 
 module.exports = app;

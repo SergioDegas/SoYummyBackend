@@ -5,7 +5,7 @@ const isValidId = (req, res, next) => {
 
   if (!isValidObjectId(id)) {
     next({ status: 404, message: 'Invalid id' });
-  }
+  };
   next();
 };
 

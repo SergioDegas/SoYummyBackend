@@ -1,6 +1,6 @@
 const { uid } = require('uid');
 const { httpError } = require('../../helpers');
-const { User } = require('../../model/user');
+const User = require('../../model/user');
 require('dotenv').config();
 
 const register = async (req, res) => {
@@ -13,6 +13,7 @@ const register = async (req, res) => {
   const newUser = await User.create({
     name,
     email,
+    password,
     verificationToken: verificationToken,
   });
   newUser.setPassword(password);
