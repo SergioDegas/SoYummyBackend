@@ -17,9 +17,9 @@ const register = async (req, res) => {
     password,
     verificationToken: verificationToken,
   });
-  newUser.setPassword(password);
-  newUser.save();
-  login(req, res);
+  await newUser.setPassword(password);
+  await newUser.save();
+  await login(req, res);
 };
 
 module.exports = register;
