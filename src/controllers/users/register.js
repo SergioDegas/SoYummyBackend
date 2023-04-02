@@ -1,6 +1,7 @@
 const { uid } = require('uid');
 const { httpError } = require('../../helpers');
 const User = require('../../model/user');
+const login = require('./login');
 require('dotenv').config();
 
 const register = async (req, res) => {
@@ -18,7 +19,7 @@ const register = async (req, res) => {
   });
   newUser.setPassword(password);
   newUser.save();
-  res.status(201).json({ user: { email, name } });
+  login(req, res);
 };
 
 module.exports = register;

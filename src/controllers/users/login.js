@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { httpError } = require('../../helpers');
 const User = require('../../model/user');
 require('dotenv').config();
 
@@ -8,7 +9,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user || !user.comparePassword(password)) {
-    throw HttpError(401, 'Email or password is wrong');
+    throw httpError(401, 'Email or password is wrong');
   }
 
   const payload = {
