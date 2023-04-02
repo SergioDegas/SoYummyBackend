@@ -1,10 +1,11 @@
 const { uid } = require('uid');
 const { httpError } = require('../../helpers');
 const User = require('../../model/user');
+const login = require('./login');
 require('dotenv').config();
 
 const register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, avatarURL } = req.body;
   const user = await User.findOne({ email });
   if (user) {
     throw httpError(409, 'Email in use');
@@ -14,11 +15,12 @@ const register = async (req, res) => {
     name,
     email,
     password,
+    avatarURL,
     verificationToken: verificationToken,
   });
-  newUser.setPassword(password);
-  newUser.save();
-  res.status(201).json({ user: { email, name } });
+  await newUser.setPassword(password);
+  await newUser.save();
+  await login(req, res);
 };
 
 module.exports = register;
