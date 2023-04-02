@@ -1,5 +1,3 @@
-const { categories } = require("../../helpers");
-const { Recipe } = require("../../models");
 const { recipes } = require("../../service");
 
 const getMainPage = async (req, res) => {
