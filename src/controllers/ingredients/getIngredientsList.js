@@ -1,7 +1,7 @@
 const { httpError } = require("../../helpers");
 const {Ingredient} = require("../../models");
 
-const getIngredientsList = async (req, res, next) => {
+const getIngredients = async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 8;
   const skipIndex = (page - 1) * limit;
@@ -14,8 +14,8 @@ const getIngredientsList = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     message: "success",
-    data: { ingredientsList: ingredientsList },
+    data: { ingredients: ingredients },
   });
 };
 
-module.exports = { getIngredientsList };
+module.exports = { getIngredients };

@@ -761,7 +761,7 @@
         ]
       }
     },
-    "/recipes/categori-list": {
+    "/recipes/category-list": {
       "get": {
         "tags": [
           "Recipes"
@@ -920,6 +920,38 @@
                 }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ]
+      }
+    },
+    "/ingredients": {
+      "get": {
+        "summary": "Ingredients list returns",
+        "description": "get list of ingredients",
+        "responses": {
+          "200": {
+            "description": "returns full list of ingredients",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ingredients"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundCommon"
           }
         },
         "security": [
@@ -1206,6 +1238,26 @@
       }
     },
     "responses": {
+      "NotFoundCommon": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found!"
+                }
+              }
+            }
+          }
+        }
+      },
       "RecipesNotFoundError": {
         "description": "Recipe not found",
         "content": {

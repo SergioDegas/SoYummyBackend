@@ -4,6 +4,6 @@ const { authenticate } = require("../../middlewares");
 
 const router = express.Router();
 
-router.get("/list", authenticate, ingredientsCtrl.getIngredientsList);
+router.get("/", authenticate, ingredientsCtrl.getIngredients);
 
 module.exports = router;
