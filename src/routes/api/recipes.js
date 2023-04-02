@@ -8,6 +8,8 @@ router.get("/category-list", authenticate, recipesCtrl.getCategoryList);
 
 router.get("/category/:category", authenticate, recipesCtrl.getRecipesByCategory);
 
-router.get("/:id", authenticate, isValidId, recipesCtrl.getRecipeById);
+router.get("/:id", 
+// authenticate, 
+isValidId, recipesCtrl.getRecipeById);
 
 module.exports = router;
