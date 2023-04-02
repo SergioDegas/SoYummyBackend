@@ -1,6 +1,6 @@
 const { uid } = require('uid');
 const { httpError } = require('../../helpers');
-const User = require('../../model/user');
+const User = require('../../models/user');
 const login = require('./login');
 require('dotenv').config();
 
