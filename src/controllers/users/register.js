@@ -5,7 +5,7 @@ const login = require('./login');
 require('dotenv').config();
 
 const register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, avatarURL } = req.body;
   const user = await User.findOne({ email });
   if (user) {
     throw httpError(409, 'Email in use');
@@ -15,6 +15,7 @@ const register = async (req, res) => {
     name,
     email,
     password,
+    avatarURL,
     verificationToken: verificationToken,
   });
   await newUser.setPassword(password);
