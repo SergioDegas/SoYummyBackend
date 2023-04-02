@@ -11,4 +11,14 @@ const getRecipeById = async (recipeId) => {
 	return await Recipe.findOne({ _id: recipeId });
 };
 
-module.exports = { getRecipesByCategory, getRecipeById };
+const getRecipesBySet = async (categoryLimit) => {
+	return await Recipe.aggregate([
+		{ $sort: { category: 1, updatedAt: -1 } },
+		{ $group: { _id: "$category", recipes: { $push: { title: "$title", thumb: "$thumb" } } } },
+		{ $sort: { _id: 1 } },
+		{ $limit: categoryLimit },
+		{ $project: { recipes: { $slice: ["$recipes", 4] } } },
+	]);
+};
+
+module.exports = { getRecipesByCategory, getRecipeById, getRecipesBySet };
