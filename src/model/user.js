@@ -22,6 +22,7 @@ const userModel = new Schema(
     },
     avatarURL: {
       type: String,
+      default: '',
     },
     token: {
       type: String,
