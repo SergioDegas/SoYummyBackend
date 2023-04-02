@@ -1,20 +1,23 @@
 const { httpError } = require("../../helpers");
 const { recipes } = require("../../service");
+const { categories } = require("../../helpers");
 
 const getRecipesByCategory = async (req, res) => {
-    const { category } = req.params;
+	const { category } = req.params;
 
-    const result = await recipes.getRecipesByCategory(category);
+	// if (!categories.includes(category)) {
+	// 	throw httpError(404, "Category not found!");
+	// }
 
-    if (!result || result.length === 0) {
-        throw httpError(401, "Bad request");
-    }
+	const result = await recipes.getRecipesByCategory(category);
 
-    res.status(200).json({
-        status: 200,
-        message: "success",
-        data: { recipes: result },
-    });
+	if (!result || result.length === 0) {
+		throw httpError(400, "Bad request");
+	}
+
+	res.status(200).json({
+		recipes: result,
+	});
 };
 
 module.exports = getRecipesByCategory;

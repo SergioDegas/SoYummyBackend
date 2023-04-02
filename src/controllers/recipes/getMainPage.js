@@ -7,14 +7,12 @@ const getMainPage = async (req, res) => {
 			.sort((a, b) => a.localeCompare(b))
 			.map(async (category) => {
 				const recipesList = await recipes.getRecipesByCategory(category, 0, 4);
-				return { category, recipes: recipesList };
+				return { [category]: recipesList };
 			}),
 	);
 
 	res.status(200).json({
-		status: 200,
-		message: "success",
-		data: result,
+		recipes: result,
 	});
 };
 
