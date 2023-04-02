@@ -1,5 +1,5 @@
 const { httpError } = require("../../helpers");
-const Ingredient = require("../../model");
+const Ingredient = require("../../models");
 
 const getIngredientsList = async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
