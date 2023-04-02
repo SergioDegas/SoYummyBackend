@@ -3,17 +3,12 @@ const { Recipe } = require("../../models");
 const { recipes } = require("../../service");
 
 const getMainPage = async (req, res) => {
-	// const result = await Promise.all(
-	// 	[...categories]
-	// 		.sort((a, b) => a.localeCompare(b))
-	// 		.map(async (category) => {
-	// 			const recipesList = await recipes.getRecipesByCategory(category, 0, 4);
-	// 			return { [category]: recipesList };
-	// 		}),
-	// );
+	const { page = 1, limit = 2 } = req.query;
 
-	const limit = 4;
-	const result = await recipes.getRecipesBySet(limit);
+	const recipesSkip = (page - 1) * limit;
+	const recipesLimit = Number(limit);
+
+	const result = await recipes.getRecipesBySet(recipesSkip, recipesLimit);
 
 	if (!result) {
 		throw httpError(404, "Recipes not found!");
