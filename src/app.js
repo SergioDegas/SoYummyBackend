@@ -4,7 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const authRouter = require("./routes/api/users");
-const { recipesRouter } = require("./routes/api");
+const { recipesRouter, ingredientsRouter } = require("./routes/api");
 
 const app = express();
 
@@ -16,15 +16,15 @@ app.use(express.json());
 
 app.use("/auth", authRouter);
 app.use("/recipes", recipesRouter);
+app.use("/ingredients", ingredientsRouter);
 
 app.use((req, res) => {
-    res.status(404).json({ message: "Not found" });
+  res.status(404).json({ message: "Not found" });
 });
 
 app.use(
-
   (
-    { status = 500, message = 'Internal Server Error', details = null },
+    { status = 500, message = "Internal Server Error", details = null },
     req,
     res,
     next
@@ -33,10 +33,9 @@ app.use(
 
     if (details) {
       result.details = details;
-    };
+    }
     res.status(status).json(result);
   }
-
 );
 
 module.exports = app;
