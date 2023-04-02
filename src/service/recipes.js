@@ -1,14 +1,14 @@
 const { Recipe } = require("../models");
 
-const getRecipesByCategory = async (category) => {
-	return Recipe.find({ category }, "title thumb", {
-		skip: 0,
-		limit: 8,
+const getRecipesByCategory = async (category, skip = 0, limit = 8) => {
+	return await Recipe.find({ category }, "title thumb", {
+		skip,
+		limit,
 	}).sort({ updatedAt: "descending" });
 };
 
 const getRecipeById = async (recipeId) => {
-	return Recipe.findOne({ _id: recipeId });
+	return await Recipe.findOne({ _id: recipeId });
 };
 
 module.exports = { getRecipesByCategory, getRecipeById };
