@@ -1,7 +1,7 @@
 const { recipes } = require("../../service");
 
 const getMainPage = async (req, res) => {
-	const { page = 1, limit = 2 } = req.query;
+	const { page = 1, limit = 4 } = req.query;
 
 	const recipesSkip = (page - 1) * limit;
 	const recipesLimit = Number(limit);

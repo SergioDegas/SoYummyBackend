@@ -1,5 +1,5 @@
 const { httpError } = require("../../helpers");
-const { categories } = require("../../helpers");
+const { categories } = require("../../data");
 
 const getCategoryList = async (req, res) => {
 	const categoryList = [...categories].sort((a, b) => a.localeCompare(b));

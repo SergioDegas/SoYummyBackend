@@ -6,13 +6,13 @@ const getRecipesByCategory = async (req, res) => {
 	const { category } = req.params;
 
 	// if (!categories.includes(category)) {
-	// 	throw httpError(404, "Category not found!");
+	// 	throw httpError(400, "Bad request");
 	// }
 
 	const result = await recipes.getRecipesByCategory(category);
 
 	if (!result || result.length === 0) {
-		throw httpError(400, "Bad request");
+		throw httpError(404, "Recipes not found");
 	}
 
 	res.status(200).json({
