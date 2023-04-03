@@ -10,6 +10,8 @@ router.get("/main-page", recipesCtrl.getMainPage);
 
 router.get("/category/:category", authenticate, recipesCtrl.getRecipesByCategory);
 
-router.get("/:id", authenticate, isValidId, recipesCtrl.getRecipeById);
+router.get("/:id", 
+// authenticate, 
+isValidId, recipesCtrl.getRecipeById);
 
 module.exports = router;
