@@ -1,6 +1,6 @@
 const { Recipe } = require("../models");
 
-const getRecipesByCategory = async (category, skip, limit) => {
+const getRecipesByCategory = async (category, skip = 0, limit = 8) => {
 	return await Recipe.find({ category }, "title thumb", {
 		skip,
 		limit,
