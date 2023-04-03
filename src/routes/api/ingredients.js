@@ -1,9 +1,9 @@
 const express = require("express");
-const ingredientsCtrl = require("../../controllers/ingredients");
+const { getIngredients } = require("../../controllers/ingredients");
 const { authenticate } = require("../../middlewares");
 
 const router = express.Router();
 
-router.get("/", authenticate, ingredientsCtrl.getIngredients);
+router.get("/", authenticate, getIngredients);
 
 module.exports = router;
