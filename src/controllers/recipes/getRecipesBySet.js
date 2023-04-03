@@ -1,12 +1,10 @@
+const { skipPageHandler, limitHandler } = require("../../helpers");
 const { recipes } = require("../../service");
 
 const getMainPage = async (req, res) => {
 	const { page = 1, limit = 4 } = req.query;
 
-	const recipesSkip = (page - 1) * limit;
-	const recipesLimit = Number(limit);
-
-	const result = await recipes.getRecipesBySet(recipesSkip, recipesLimit);
+	const result = await recipes.getRecipesBySet(skipPageHandler(page, limit), limitHandler(limit));
 
 	if (!result) {
 		throw httpError(404, "Recipes not found!");
