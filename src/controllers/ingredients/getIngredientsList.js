@@ -7,6 +7,7 @@ const getIngredients = async (req, res, next) => {
 	const skipIndex = (page - 1) * limit;
 
 	const ingredientsList = await Ingredient.find().skip(skipIndex).limit(limit);
+	console.log("ingredientsList: ", ingredientsList);
 	if (!ingredientsList) {
 		throw httpError(404, "Not found");
 	}

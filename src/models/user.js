@@ -29,10 +29,14 @@ const userModel = new Schema(
 			type: String,
 			default: "",
 		},
-		shoppingList: {
-			type: Array,
-			default: [],
-		},
+		shoppingList: [
+			{
+				id: { type: String },
+				name: { type: String },
+				image: { type: String },
+				amount: { type: String },
+			},
+		],
 		verify: {
 			type: Boolean,
 			default: false,

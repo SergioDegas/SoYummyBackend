@@ -539,7 +539,7 @@
 								"schema": {
 									"type": "object",
 									"properties": {
-										"shoppingList": { "$ref": "#/components/schemas/Ingredients" }
+										"shoppingList": { "$ref": "#/components/schemas/RecipeIngredients" }
 									}
 								}
 							}
@@ -570,26 +570,41 @@
 			},
 			"patch": {
 				"tags": ["User"],
-				"operationId": "updateShopingList",
+				"operationId": "updateShoppingList",
 				"requestBody": {
-					"description": "Give id of updated ingredient",
+					"description": "Give an id of ingredient and amount",
 					"content": {
 						"application/json": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"id": {
-										"type": "string"
-									}
-								}
+								"$ref": "#/components/schemas/RecipeIngredient"
 							}
 						}
 					}
 				},
 				"responses": {
 					"200": {
-						"$ref": "#/components/schemas/RecipeIngredient"
+						"description": "Shopping list updated. Returns or added Ingredient object or 'removedIngredientId'",
+						"content": {
+							"application/json": {
+								"schema": {
+									"oneOf": [
+										{
+											"$ref": "#/components/schemas/RecipeIngredient"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"removedIngredientId": {
+													"type": "string"
+												}
+											}
+										}
+									]
+								}
+							}
+						}
 					},
+
 					"400": {
 						"$ref": "#/components/responses/BadRequest"
 					},
@@ -597,11 +612,18 @@
 						"$ref": "#/components/responses/UnauthorizedError"
 					},
 					"404": {
-						"description": "Not found!",
+						"description": "Ingredient not found!",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "string"
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "integer",
+											"default": 404
+										},
+										"message": "Failed to update! Ingredient not found!"
+									}
 								}
 							}
 						}
@@ -1114,7 +1136,7 @@
 					"ingredients": {
 						"type": "array",
 						"items": {
-							"$ref": "#/components/schemas/Ingredient"
+							"$ref": "#/components/schemas/RecipeIngredients"
 						}
 					},
 					"preparation": {
@@ -1149,7 +1171,7 @@
 					"ingredients": {
 						"type": "array",
 						"items": {
-							"$ref": "#/components/schemas/Ingredient"
+							"$ref": "#/components/schemas/RecipeIngredients"
 						}
 					},
 					"preparation": {
@@ -1295,6 +1317,7 @@
 					}
 				}
 			},
+
 			"RecipeNotFoundError": {
 				"description": "Recipe not found",
 				"content": {
