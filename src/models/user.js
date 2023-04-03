@@ -1,54 +1,59 @@
-const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
-const { handleMongooseError } = require('../helpers');
+const { Schema, model } = require("mongoose");
+const bcrypt = require("bcrypt");
+const { handleMongooseError } = require("../helpers");
+const { array } = require("joi");
 
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userModel = new Schema(
-  {
-    name: {
-      type: String,
-      required: [true, 'Name is required'],
-    },
-    email: {
-      type: String,
-      match: emailRegexp,
-      required: [true, 'Email is required'],
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: [true, 'Set password for user'],
-    },
-    avatarURL: {
-      type: String,
-      default: '',
-    },
-    token: {
-      type: String,
-      default: '',
-    },
-    verify: {
-      type: Boolean,
-      default: false,
-    },
-    verificationToken: {
-      type: String,
-      required: [true, 'Verify token is required'],
-    },
-  },
-  { versionKey: false, timestamps: true }
+	{
+		name: {
+			type: String,
+			required: [true, "Name is required"],
+		},
+		email: {
+			type: String,
+			match: emailRegexp,
+			required: [true, "Email is required"],
+			unique: true,
+		},
+		password: {
+			type: String,
+			required: [true, "Set password for user"],
+		},
+		avatarURL: {
+			type: String,
+			default: "",
+		},
+		token: {
+			type: String,
+			default: "",
+		},
+		shoppingList: {
+			type: Array,
+			default: [],
+		},
+		verify: {
+			type: Boolean,
+			default: false,
+		},
+		verificationToken: {
+			type: String,
+			required: [true, "Verify token is required"],
+		},
+	},
+	{ versionKey: false, timestamps: true },
 );
 
-userModel.post('save', handleMongooseError);
+userModel.post("save", handleMongooseError);
 
 userModel.methods.setPassword = function (password) {
-  this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+	this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
 userModel.methods.comparePassword = function (password) {
-  return bcrypt.compareSync(password, this.password);
+	return bcrypt.compareSync(password, this.password);
 };
 
-const User = model('user', userModel);
+const User = model("user", userModel);
 
 module.exports = User;

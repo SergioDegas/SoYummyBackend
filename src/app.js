@@ -3,7 +3,7 @@ const logger = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 
-const { recipesRouter, authRouter, ingredientsRouter, searchRouter } = require("./routes/api");
+const { recipesRouter, authRouter, ingredientsRouter, searchRouter, userRoute } = require("./routes/api");
 
 const app = express();
 
