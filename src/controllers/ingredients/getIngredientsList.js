@@ -6,9 +6,8 @@ const getIngredients = async (req, res, next) => {
 	const limit = parseInt(req.query.limit) || 8;
 	const skipIndex = (page - 1) * limit;
 
-	const ingredientsList = await Ingredient.find().skip(skipIndex).limit(limit);
-	console.log("ingredientsList: ", ingredientsList);
-	if (!ingredientsList) {
+	const ingredients = await Ingredient.find().skip(skipIndex).limit(limit);
+	if (!ingredients) {
 		throw httpError(404, "Not found");
 	}
 
