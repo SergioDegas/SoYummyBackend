@@ -2,68 +2,65 @@ const { Schema, model } = require("mongoose");
 const { categories } = require("../helpers");
 
 const recipeModel = new Schema(
-    {
-        title: {
-            type: String,
-            required: [true, "Set title for recipe"],
-        },
+	{
+		title: {
+			type: String,
+			required: [true, "Set title for recipe"],
+		},
 
-        category: {
-            type: String,
-            enum: [...categories],
-            required: [true, "Set category for recipe"],
-        },
+		category: {
+			type: String,
+			enum: [...categories],
+			required: [true, "Set category for recipe"],
+		},
 
-        area: {
-            type: String,
-        },
+		area: {
+			type: String,
+		},
 
-        instructions: {
-            type: String,
-            required: [true, "Set instructions for recipe"],
-        },
+		instructions: {
+			type: String,
+			required: [true, "Set instructions for recipe"],
+		},
 
-        description: {
-            type: String,
-        },
+		description: {
+			type: String,
+		},
 
-        thumb: {
-            type: String,
-            required: [true, "Set image for recipe"],
-        },
+		thumb: {
+			type: String,
+			required: [true, "Set image for recipe"],
+		},
 
-        preview: {
-            type: String,
-        },
+		preview: {
+			type: String,
+		},
 
-        time: {
-            type: String,
-            required: true,
-        },
+		time: {
+			type: String,
+			required: true,
+		},
 
-        popularity: {
-            type: Number,
-            default: 0,
-        },
+		popularity: {
+			type: Number,
+			default: 0,
+		},
 
-        youtube: {
-            type: String,
-        },
+		tags: {
+			type: Array,
+		},
 
-        tags: {
-            type: Array,
-        },
+		ingredients: {
+			type: Array,
+			default: [],
+		},
 
-        ingredients: {
-            type: Array,
-        },
-
-        owner: {
-            type: Schema.Types.ObjectId,
-            ref: "user",
-        },
-    },
-    { versionKey: false, timestamps: true }
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: "user",
+		},
+	},
+	{ versionKey: false, timestamps: true },
 );
 
 const Recipe = model("recipe", recipeModel);

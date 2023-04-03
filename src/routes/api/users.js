@@ -1,15 +1,10 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const {
-  isBodyNotEmpty,
-  schemaValidator,
-  authenticate,
-} = require('../../middlewares');
-const { register, login, current, logout } = require('../../controllers/users');
+const { isBodyNotEmpty, schemaValidator, authenticate } = require("../../middlewares");
+const { getShoppingList, updateShoppingList, current } = require("../../controllers/users");
 
-router.post('/register', isBodyNotEmpty(), schemaValidator, register);
-router.post('/login', isBodyNotEmpty(), schemaValidator, login);
-router.get('/current', schemaValidator, authenticate, current);
-router.post('/logout', schemaValidator, authenticate, logout);
+router.get("/shopping-list", authenticate, getShoppingList);
+router.patch("/shopping-list", isBodyNotEmpty(), authenticate, schemaValidator, updateShoppingList);
+router.get("/current", schemaValidator, authenticate, current);
 
 module.exports = router;
