@@ -11,7 +11,7 @@ const getRecipesByCategory = async (req, res) => {
 
 	const result = await recipes.getRecipesByCategory(category);
 
-	if (!result || result.length === 0) {
+	if (!result) {
 		throw httpError(404, "Recipes not found");
 	}
 
