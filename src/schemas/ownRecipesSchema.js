@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { categories } = require("../helpers");
+const { categories } = require("../data");
 
 
 const joiOwnRecipesSchema = Joi.object({
