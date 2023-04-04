@@ -3,7 +3,7 @@ const logger = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 
-const { recipesRouter, authRouter, ingredientsRouter } = require("./routes/api");
+const { recipesRouter, authRouter, ingredientsRouter, searchRouter, userRouter, ownRecipesRouter } = require("./routes/api");
 
 const app = express();
 
@@ -16,8 +16,11 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
 app.use("/recipes", recipesRouter);
 app.use("/ingredients", ingredientsRouter);
+app.use("/search", searchRouter);
+app.use("/ownRecipes", ownRecipesRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {

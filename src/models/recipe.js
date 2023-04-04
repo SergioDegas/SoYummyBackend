@@ -50,12 +50,10 @@ const recipeModel = new Schema(
 			type: String,
 		},
 
-		tags: {
-			type: Array,
-		},
-
+		
 		ingredients: {
 			type: Array,
+			default: [],
 		},
 
 		owner: {

@@ -1,6 +1,6 @@
 const { ctrlWrapper } = require("../../helpers");
-const { getIngredientsList } = require("./getIngredientsList");
+const getIngredients = require("./getIngredientsList");
 
 module.exports = {
-  getIngredientsList: ctrlWrapper(getIngredientsList),
+	getIngredients: ctrlWrapper(getIngredients),
 };
