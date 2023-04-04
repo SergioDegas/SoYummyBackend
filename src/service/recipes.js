@@ -21,5 +21,13 @@ const getRecipesBySet = async (skip, limit) => {
 		{ $project: { recipes: { $slice: ["$recipes", 4] } } },
 	]);
 };
+const getPopularRecipes = async () =>
+	await Recipe.aggregate([{ $sort: { category: 1, updatedAt: -1 } }, { $limit: 4 }], {
+		$project: {
+			title: 1,
+			image: 1,
+			description: 1,
+		},
+	});
 
-module.exports = { getRecipesByCategory, getRecipeById, getRecipesBySet };
+module.exports = { getRecipesByCategory, getRecipeById, getRecipesBySet, getPopularRecipes };
