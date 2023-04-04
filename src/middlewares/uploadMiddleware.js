@@ -5,9 +5,8 @@ require('dotenv').config();
 
 const {CLOUDINARY_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET} = process.env
 
-
-
-cloudinary.config({
+const uploadMiddleware = (value) => {
+  cloudinary.config({
   cloud_name: CLOUDINARY_NAME,
   api_key: CLOUDINARY_KEY,
   api_secret: CLOUDINARY_SECRET,
@@ -16,7 +15,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'so_yummy/avatars',
+    folder: `so_yummy/${value}`,
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -24,6 +23,9 @@ const storage = new CloudinaryStorage({
 });
 
 
-const uploadCloud = multer({ storage });
+  const uploadCloud = multer({ storage });
+  
+  return uploadCloud.single('image')
+}
 
-module.exports = uploadCloud;
+module.exports = uploadMiddleware;

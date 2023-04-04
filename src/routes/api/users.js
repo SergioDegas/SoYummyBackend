@@ -6,7 +6,7 @@ const { getShoppingList, updateShoppingList, current, updateAvatar, logout } = r
 router.get("/shopping-list", authenticate, getShoppingList);
 router.patch("/shopping-list", isBodyNotEmpty(), authenticate, schemaValidator, updateShoppingList);
 router.get("/current", schemaValidator, authenticate, current);
-router.post('/updateAvatar', authenticate, uploadCloud.single("image"), updateAvatar);
+router.post('/updateAvatar', authenticate, uploadCloud('avatars'), updateAvatar);
 router.post("/logout", schemaValidator, authenticate, logout);
 
 module.exports = router;
