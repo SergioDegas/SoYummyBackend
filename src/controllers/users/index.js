@@ -1,15 +1,14 @@
-const register = require("./register");
-const login = require("./login");
 const current = require("./current");
-const logout = require("./logout");
 const { updateShoppingList, getShoppingList } = require("./shoppingList");
 const { ctrlWrapper } = require("../../helpers");
+const updateAvatar = require('./updateAvatar');
+const logout = require('./logout');
 
 module.exports = {
-	register: ctrlWrapper(register),
-	login: ctrlWrapper(login),
 	current: ctrlWrapper(current),
-	logout: ctrlWrapper(logout),
 	updateShoppingList: ctrlWrapper(updateShoppingList),
-	getShoppingList: ctrlWrapper(getShoppingList),
+  getShoppingList: ctrlWrapper(getShoppingList),
+  updateAvatar: ctrlWrapper(updateAvatar),
+  logout: ctrlWrapper(logout),
+
 };
