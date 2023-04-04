@@ -6,5 +6,6 @@ const { getShoppingList, updateShoppingList, current } = require("../../controll
 router.get("/shopping-list", authenticate, getShoppingList);
 router.patch("/shopping-list", isBodyNotEmpty(), authenticate, schemaValidator, updateShoppingList);
 router.get("/current", schemaValidator, authenticate, current);
+router.post("/")
 
 module.exports = router;
