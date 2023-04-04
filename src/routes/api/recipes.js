@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/category-list", authenticate, recipesCtrl.getCategoryList);
 
-router.get("/main-page", recipesCtrl.getMainPage);
+router.get("/main-page", authenticate, recipesCtrl.getMainPage);
 
 router.get("/category/:category", authenticate, recipesCtrl.getRecipesByCategory);
 

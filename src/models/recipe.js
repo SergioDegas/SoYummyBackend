@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { categories } = require("../helpers");
+const { categories } = require("../data");
 
 const recipeModel = new Schema(
 	{
@@ -46,10 +46,11 @@ const recipeModel = new Schema(
 			default: 0,
 		},
 
-		tags: {
-			type: Array,
+		youtube: {
+			type: String,
 		},
 
+		
 		ingredients: {
 			type: Array,
 			default: [],

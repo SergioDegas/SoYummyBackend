@@ -1,18 +1,14 @@
 const { httpError } = require("../../helpers");
-const { categories } = require("../../helpers");
+const { categories } = require("../../data");
 
 const getCategoryList = async (req, res) => {
-    const categoryList = [...categories].sort((a, b) => a.localeCompare(b));
+	const categoryList = [...categories].sort((a, b) => a.localeCompare(b));
 
-    if (!categoryList) {
-        throw httpError(404, "Not found");
-    }
-
-    res.status(200).json({
-        status: 200,
-        message: "success",
-        data: { categoryList: categoryList },
-    });
+	res.status(200).json({
+		status: 200,
+		message: "success",
+		categories: categoryList,
+	});
 };
 
 module.exports = getCategoryList;
