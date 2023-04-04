@@ -3,7 +3,7 @@ const { updateShoppingList, getShoppingList } = require("./shoppingList");
 const { ctrlWrapper } = require("../../helpers");
 const updateAvatar = require('./updateAvatar');
 const logout = require('./logout');
-const {addFavoriteRecipes, getFavoriteRecipes} = require("./favoriteRecipes");
+const {addFavoriteRecipes, getFavoriteRecipes, removeFavoriteRecipe} = require("./favoriteRecipes");
 
 module.exports = {
 	current: ctrlWrapper(current),
@@ -13,4 +13,5 @@ module.exports = {
   logout: ctrlWrapper(logout),
   addFavoriteRecipes: ctrlWrapper(addFavoriteRecipes),
   getFavoriteRecipes: ctrlWrapper(getFavoriteRecipes),
+  removeFavoriteRecipe: ctrlWrapper(removeFavoriteRecipe),
 };
