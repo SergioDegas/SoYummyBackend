@@ -13,9 +13,9 @@ const joiOwnRecipesSchema = Joi.object({
 	time: Joi.number().required(),
 	imageURL: Joi.string(),
 	ingredients: Joi.array().items({
-		name: Joi.string().required(),
+		name: Joi.string(),
 		image: Joi.string(),
-		family: Joi.string().required(),
+		family: Joi.string(),
 	}),
 });
 
