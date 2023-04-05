@@ -46,6 +46,11 @@ const recipeModel = new Schema(
 			default: 0,
 		},
 
+		favorites:{
+			type: [String],
+			default: [],
+		},
+
 		youtube: {
 			type: String,
 		},

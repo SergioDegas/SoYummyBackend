@@ -1,9 +1,7 @@
-const addFavoriteRecipes = require("./addFavoriteRecipes");
 const getFavoriteRecipes = require("./getFavoriteRecipes");
-const removeFavoriteRecipe = require("./removeFavoriteRecipe");
+const updateFavoriteRecipe = require("./updateFavoriteRecipe");
 
-module.exports = {
-	addFavoriteRecipes,
-	getFavoriteRecipes,
-	removeFavoriteRecipe,
+module.exports = {	
+	getFavoriteRecipes,	
+	updateFavoriteRecipe,
 };
