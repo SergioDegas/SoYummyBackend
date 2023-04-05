@@ -37,6 +37,10 @@ const userModel = new Schema(
 				amount: { type: String },
 			},
 		],
+		favoriteRecipes: {
+			type: [String],
+			default: [],
+		},
 		verify: {
 			type: Boolean,
 			default: false,
