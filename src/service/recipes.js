@@ -22,12 +22,16 @@ const getRecipesBySet = async (skip, limit) => {
 	]);
 };
 const getPopularRecipes = async () =>
-	await Recipe.aggregate([{ $sort: { category: 1, updatedAt: -1 } }, { $limit: 4 }], {
-		$project: {
-			title: 1,
-			image: 1,
-			description: 1,
+	await Recipe.aggregate([
+		{ $sort: { popular: 1 } },
+		{ $limit: 4 },
+		{
+			$project: {
+				title: 1,
+				preview: 1,
+				instructions: 1,
+			},
 		},
-	});
+	]);
 
 module.exports = { getRecipesByCategory, getRecipeById, getRecipesBySet, getPopularRecipes };

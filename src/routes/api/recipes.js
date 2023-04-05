@@ -5,6 +5,7 @@ const { authenticate, isValidId } = require("../../middlewares");
 const router = express.Router();
 
 router.get("/category-list", authenticate, recipesCtrl.getCategoryList);
+router.get("/popular-recipes", recipesCtrl.getPopularRecipes);
 
 router.get("/main-page", authenticate, recipesCtrl.getMainPage);
 

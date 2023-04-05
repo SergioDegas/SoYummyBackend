@@ -1,8 +1,9 @@
 const Joi = require("joi");
 const { categories } = require("../data");
-console.log(categories);
 const joiOwnRecipesSchema = Joi.object({
-	category: Joi.string().valid(categories).required(),
+	category: Joi.string()
+		.valid(...categories)
+		.required(),
 	title: Joi.string().min(2).max(48).required(),
 	instructions: Joi.string().required(),
 	description: Joi.string(),
