@@ -45,15 +45,13 @@ const getRecipesBySet = async (skip, limit) => {
 };
 const getPopularRecipes = async () =>
 	await Recipe.aggregate([
-		{ $sort: { popular: 1 } },
-		{ $limit: 4 },
 		{
-			$project: {
-				title: 1,
-				preview: 1,
-				instructions: 1,
-			},
+			$project: { title: 1, preview: 1, instructions: 1, favoritesCount: { $size: { $ifNull: ["$favorites", []] } } },
 		},
+		{
+			$sort: { favoritesCount: -1 },
+		},
+		{ $unset: "favoritesCount" },
 	]);
 
 module.exports = { getRecipesByCategory, getRecipeById, getRecipesBySet, getPopularRecipes };

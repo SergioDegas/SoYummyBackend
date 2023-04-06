@@ -16,7 +16,6 @@ const updateShoppingList = async (req, res) => {
 		}
 		const payload = { ...JSON.parse(JSON.stringify(ingredientToAdd)), amount };
 		await User.findByIdAndUpdate(userId, { $addToSet: { shoppingList: payload } });
-
 		res.json({
 			status: 200,
 			message: `${ingredientToAdd.name} successfully added to the shopping list`,
