@@ -1,17 +1,14 @@
 const { mongoose } = require("mongoose");
 const { Recipe } = require("../models");
 
-const getRecipesByCategory = async (category, skip = 0, limit = 8) => {
-	return await Recipe.find({ category }, "title thumb", {
-		skip,
-		limit,
-	}).sort({ updatedAt: "descending" });
+const getRecipesByCategory = async (category, skip, limit) => {
+	return await Recipe.find({ category }, "title thumb").sort({ updatedAt: "descending" }).skip(skip).limit(limit);
 };
 
 const getRecipeById = async (recipeId) => {
 	const ObjectId = mongoose.Types.ObjectId;
 
-	return await Recipe.aggregate([
+	const result = await Recipe.aggregate([
 		{ $match: { _id: ObjectId(`${recipeId}`) } },
 		{ $lookup: { from: "ingredients", localField: "ingredients.id", foreignField: "_id", as: "ingredientsInfo" } },
 		{
@@ -31,6 +28,8 @@ const getRecipeById = async (recipeId) => {
 		},
 		{ $unset: ["ingredientsInfo", "ingredients.id"] },
 	]);
+
+	return result.length > 0 ? result[0] : null;
 };
 
 const getRecipesBySet = async (skip, limit) => {
