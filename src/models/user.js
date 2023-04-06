@@ -1,7 +1,6 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, default: mongoose } = require("mongoose");
 const bcrypt = require("bcrypt");
 const { handleMongooseError } = require("../helpers");
-const { array } = require("joi");
 
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -31,12 +30,17 @@ const userModel = new Schema(
 		},
 		shoppingList: [
 			{
-				id: { type: String },
-				name: { type: String },
-				image: { type: String },
-				amount: { type: String },
+				_id: false,
+				id: {
+					type: mongoose.Schema.Types.ObjectId,
+					ref: "ingredient",
+				},
+				measure: {
+					type: String,
+				},
 			},
 		],
+
 		favoriteRecipes: {
 			type: [String],
 			default: [],
