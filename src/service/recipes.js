@@ -11,7 +11,7 @@ const getRecipesByCategory = async (category, skip = 0, limit = 8) => {
 const getRecipeById = async (recipeId) => {
 	const ObjectId = mongoose.Types.ObjectId;
 
-	return await Recipe.aggregate([
+	const result = await Recipe.aggregate([
 		{ $match: { _id: ObjectId(`${recipeId}`) } },
 		{ $lookup: { from: "ingredients", localField: "ingredients.id", foreignField: "_id", as: "ingredientsInfo" } },
 		{
@@ -29,8 +29,10 @@ const getRecipeById = async (recipeId) => {
 				},
 			},
 		},
+		{ $limit: 1 },
 		{ $unset: ["ingredientsInfo", "ingredients.id"] },
 	]);
+	return result[0] || null;
 };
 
 const getRecipesBySet = async (skip, limit) => {
@@ -43,5 +45,19 @@ const getRecipesBySet = async (skip, limit) => {
 		{ $project: { recipes: { $slice: ["$recipes", 4] } } },
 	]);
 };
+const removeRecipeFromFavorites = async ({ userId, recipeId }) =>
+	await Recipe.findByIdAndUpdate(recipeId, { $pull: { favorites: userId } });
 
-module.exports = { getRecipesByCategory, getRecipeById, getRecipesBySet };
+const addRecipeToFavorites = async ({ userId, recipeId }) =>
+	await Recipe.findByIdAndUpdate(recipeId, {
+		$addToSet: {
+			favorites: userId,
+		},
+	});
+module.exports = {
+	getRecipesByCategory,
+	getRecipeById,
+	getRecipesBySet,
+	removeRecipeFromFavorites,
+	addRecipeToFavorites,
+};
