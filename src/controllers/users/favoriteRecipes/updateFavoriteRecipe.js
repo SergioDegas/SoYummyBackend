@@ -1,54 +1,38 @@
 const { httpError } = require("../../../helpers");
 const { User, Recipe } = require("../../../models");
-
+const { user, recipes } = require("../../../service");
 const updateFavoriteRecipe = async (req, res) => {
-  const { favoriteRecipes = [], id: userId } = req.user;
-  const { recipeId } = req.body;
-  
-  if (!recipeId) {
-    throw httpError(400, "Bad request!");
-  }
+	const { favoriteRecipes = [], id: userId } = req.user;
+	const { recipeId } = req.body;
 
-  const isFavoriteRecipeAlreadyIn = favoriteRecipes.includes(recipeId);
-  const favoriteRecipeToAdd = await Recipe.findById(recipeId);
+	if (!recipeId) {
+		throw httpError(400, "Bad request!");
+	}
 
-  if (!favoriteRecipeToAdd) {
-    throw httpError(404, "Recipe not found");
-  }
+	const isFavoriteRecipeAlreadyIn = favoriteRecipes.includes(recipeId);
+	const favoriteRecipeToAdd = await recipes.getRecipeById(recipeId);
+	const payload = { userId, recipeId };
+	if (!favoriteRecipeToAdd) {
+		throw httpError(404, "Recipe not found");
+	}
+	
+	if (!isFavoriteRecipeAlreadyIn) {
+		await user.addRecipeToFavorites(payload);
+		await recipes.addRecipeToFavorites(payload);
 
-  const isUserAlreadyFavoritedTheRecipe = favoriteRecipeToAdd.favorites.includes(userId);
+		res.json({
+			status: 200,
+			message: `Recipe - ${favoriteRecipeToAdd.title || ""} is added to favorites successfully`,
+			data: { addedRecipeId: recipeId },
+		});
+	} else if (isFavoriteRecipeAlreadyIn) {
+		await user.removeRecipeFromFavorites(payload);
+		await recipes.removeRecipeFromFavorites(payload);
+		res.json({
+			status: 200,
+			message: `Recipe - ${favoriteRecipeToAdd.title || ""} removed from favorites successfully`,
+			data: { removedRecipeId: recipeId },
+		});
+	}};
 
-  if (!isUserAlreadyFavoritedTheRecipe && !isFavoriteRecipeAlreadyIn) {
-    await User.findByIdAndUpdate(userId, { $addToSet: { favoriteRecipes: recipeId } });
-    await Recipe.findByIdAndUpdate(recipeId, { $push: { favorites: userId } });
-
-    res.json({
-      status: 200,
-      message: "Recipe added to favorites successfully",
-    });
-  } else if (isUserAlreadyFavoritedTheRecipe && isFavoriteRecipeAlreadyIn) {
-    await User.findByIdAndUpdate(userId, { $pull: { favoriteRecipes: recipeId } });
-    await Recipe.findByIdAndUpdate(recipeId, { $pull: { favorites: userId } });
-
-    res.json({
-      status: 200,
-      message: "Recipe removed from favorites successfully",
-    });
-  } else if (isUserAlreadyFavoritedTheRecipe && !isFavoriteRecipeAlreadyIn) {
-    await User.findByIdAndUpdate(userId, { $pull: { favoriteRecipes: recipeId } });
-
-    res.json({
-      status: 200,
-      message: "Recipe removed from favorites successfully",
-    });
-  } else {
-    await User.findByIdAndUpdate(userId, { $addToSet: { favoriteRecipes: recipeId } });
-
-    res.json({
-      status: 200,
-      message: "Recipe added to favorites successfully",
-    });
-  }
-};
-
-module.exports = updateFavoriteRecipe;
+  module.exports = updateFavoriteRecipe;
