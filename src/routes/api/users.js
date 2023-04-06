@@ -7,9 +7,8 @@ const {
 	current,
 	updateAvatar,
 	logout,
-	addFavoriteRecipes,
 	getFavoriteRecipes,
-	removeFavoriteRecipe,
+	updateFavoriteRecipe,
 } = require("../../controllers/users");
 
 router.get("/shopping-list", authenticate, getShoppingList);
@@ -17,8 +16,7 @@ router.patch("/shopping-list", isBodyNotEmpty(), authenticate, schemaValidator, 
 router.get("/current", schemaValidator, authenticate, current);
 router.post("/updateAvatar", authenticate, uploadCloud("avatars"), updateAvatar);
 router.post("/logout", schemaValidator, authenticate, logout);
-router.post("/favorites", authenticate, isBodyNotEmpty(), addFavoriteRecipes);
 router.get("/favorites", authenticate, getFavoriteRecipes);
-router.delete("/favorites/:recipeId", authenticate, schemaValidator, removeFavoriteRecipe);
+router.patch("/favorites", authenticate, isBodyNotEmpty(), updateFavoriteRecipe)
 
 module.exports = router;
