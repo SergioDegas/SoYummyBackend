@@ -1,16 +1,10 @@
-const { httpError } = require("../../../helpers");
-const { User } = require("../../../models");
-require("dotenv").config();
-
+const { user } = require("../../../service");
 const getShoppingList = async (req, res) => {
-	const { shoppingList } = req.user;
-
-	if (!shoppingList.length) {
-		res.json({
-			shoppingList: [],
-		});
-	}
-	res.json({ shoppingList });
+	const result = await user.getShoppingList(req.user.id);
+	res.json({
+		status: 200,
+		...result,
+	});
 };
 
 module.exports = getShoppingList;
