@@ -5,7 +5,7 @@ const {
 	getShoppingList,
 	updateShoppingList,
 	current,
-	updateAvatar,
+	updateUserData,
 	logout,
 	getFavoriteRecipes,
 	updateFavoriteRecipe,
@@ -14,7 +14,7 @@ const {
 router.get("/shopping-list", authenticate, getShoppingList);
 router.patch("/shopping-list", isBodyNotEmpty(), authenticate, schemaValidator, updateShoppingList);
 router.get("/current", schemaValidator, authenticate, current);
-router.post("/updateAvatar", authenticate, uploadCloud("avatars"), updateAvatar);
+router.post("/updateAvatar", authenticate, uploadCloud("avatars"), updateUserData);
 router.post("/logout", schemaValidator, authenticate, logout);
 router.get("/favorites", authenticate, getFavoriteRecipes);
 router.patch("/favorites", authenticate, isBodyNotEmpty(), updateFavoriteRecipe)
