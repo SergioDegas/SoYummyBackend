@@ -1143,7 +1143,8 @@
 					"favorites": {
 						"type": "array",
 						"items": {
-							"type": "string"
+							"type": "string",
+							"default": "user id's"
 						}
 					},
 					"popularity": {
