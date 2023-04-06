@@ -53,4 +53,19 @@ const getPopularRecipes = async () =>
 		{ $unset: "favoritesCount" },
 	]);
 
-module.exports = { getRecipesByCategory, getRecipeById, getRecipesBySet, getPopularRecipes };
+	const removeRecipeFromFavorites = async ({ userId, recipeId }) =>
+	await Recipe.findByIdAndUpdate(recipeId, { $pull: { favorites: userId } });
+
+const addRecipeToFavorites = async ({ userId, recipeId }) =>
+	await Recipe.findByIdAndUpdate(recipeId, {
+		$addToSet: {
+			favorites: userId,
+		},
+	});
+module.exports = {
+	getRecipesByCategory,
+	getRecipeById,
+	getRecipesBySet,
+	removeRecipeFromFavorites,
+	addRecipeToFavorites,
+};
