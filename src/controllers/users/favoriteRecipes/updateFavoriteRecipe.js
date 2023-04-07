@@ -1,5 +1,4 @@
 const { httpError } = require("../../../helpers");
-const { User, Recipe } = require("../../../models");
 const { user, recipes } = require("../../../service");
 const updateFavoriteRecipe = async (req, res) => {
 	const { favoriteRecipes = [], id: userId } = req.user;

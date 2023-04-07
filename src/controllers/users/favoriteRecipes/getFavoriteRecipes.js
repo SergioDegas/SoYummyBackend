@@ -1,7 +1,6 @@
-const { httpError } = require("../../../helpers");
 const { user } = require("../../../service");
 
-const getFavoriteRecipes = async (req, res, next) => {
+const getFavoriteRecipes = async (req, res) => {
 	const { favoriteRecipes } = req.user;
 
 	const recipes = await user.getFavoriteRecipes(favoriteRecipes);

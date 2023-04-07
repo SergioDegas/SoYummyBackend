@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { isBodyNotEmpty, schemaValidator, authenticate } = require("../../middlewares");
+const { isBodyNotEmpty, schemaValidator } = require("../../middlewares");
 const { register, login } = require("../../controllers/auth");
 
 router.post("/register", isBodyNotEmpty(), schemaValidator, register);

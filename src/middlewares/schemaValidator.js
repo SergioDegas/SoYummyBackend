@@ -24,7 +24,7 @@ const schemaValidator = (req, res, next) => {
 			const JoiError = {
 				status: "failed",
 				message: "At least one of the field is invalid",
-				details: _.map(error.details, ({ message, type }) => ({
+				details: _.map(error.details, ({ message }) => ({
 					message: message.replace(/['"]/g, ""),
 				})),
 				error,
