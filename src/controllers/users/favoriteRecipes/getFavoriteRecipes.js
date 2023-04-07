@@ -11,3 +11,4 @@ const getFavoriteRecipes = async (req, res, next) => {
 		data: { recipes },
 	});
 };
+module.exports = getFavoriteRecipes;

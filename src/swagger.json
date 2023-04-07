@@ -119,6 +119,75 @@
 				}
 			}
 		},
+		"/user": {
+			"put": {
+				"tags": ["User"],
+				"summary": "Update user information",
+				"operationId": "updateUserInformation",
+				"requestBody": {
+					"description": "Update name or avatar or both",
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"example": "John Smith"
+									},
+									"avatar": {
+										"type": "string",
+										"format": "binary"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "integer",
+											"example": 200
+										},
+										"message": {
+											"type": "string",
+											"example": "Success"
+										},
+										"data": {
+											"type": "object",
+											"properties": {
+												"name": {
+													"type": "string",
+													"example": "John"
+												},
+												"avatar": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"401": {
+						"$ref": "#/components/responses/UnauthorizedError"
+					}
+				},
+				"security": [
+					{
+						"jwtAuth": []
+					}
+				]
+			}
+		},
 		"/user/logout": {
 			"post": {
 				"tags": ["User"],
@@ -218,64 +287,11 @@
 				]
 			}
 		},
-		"/update": {
-			"put": {
-				"tags": ["User"],
-				"summary": "Update user information",
-				"operationId": "updateUserInformation",
-				"requestBody": {
-					"description": "Update name or avatar or both",
-					"content": {
-						"multipart/form-data": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string",
-										"example": "John Smith"
-									},
-									"avatar": {
-										"type": "string",
-										"format": "binary"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "success",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"name": {
-											"type": "string",
-											"example": "John"
-										},
-										"avatar": {
-											"type": "string",
-											"example": "sdfsdfsdf.jpg"
-										}
-									}
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"jwtAuth": []
-					}
-				]
-			}
-		},
+
 		"/user/subscription": {
 			"patch": {
 				"tags": ["User"],
-				"summary": "Uppdate User Subscription",
+				"summary": "Update User Subscription",
 				"operationId": "updateUserSubscription",
 				"requestBody": {
 					"description": "Send value to update subscription",
@@ -450,7 +466,53 @@
 				"tags": ["User"],
 				"responses": {
 					"200": {
-						"description": "successfull operation"
+						"description": "successfull operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "integer",
+											"example": 200
+										},
+										"message": "Success",
+										"data": {
+											"type": "object",
+											"properties": {
+												"recipes": {
+													"type": "object",
+													"properties": {
+														"_id": {
+															"type": "string"
+														},
+														"title": {
+															"type": "string",
+															"example": "Mediterranean Pasta Salad"
+														},
+														"instructions": {
+															"type": "string",
+															"example": "Bring a large saucepan of salted water to the boil\r\nAdd the pasta, stir once and cook for about 10 minutes or as directed on the packet.\r\nMeanwhile, wash the tomatoes and cut into quarters. Slice the olives. Wash the basil.\r\nPut the tomatoes into a salad bowl and tear the basil leaves over them. Add a tablespoon of olive oil and mix.\r\nWhen the pasta is ready, drain into a colander and run cold water over it to cool it quickly.\r\nToss the pasta into the salad bowl with the tomatoes and basil.\r\nAdd the sliced olives, drained mozzarella balls, and chunks of tuna. Mix well and let the salad rest for at least half an hour to allow the flavours to mingle.\r\nSprinkle the pasta with a generous grind of black pepper and drizzle with the remaining olive oil just before serving."
+														},
+														"description": {
+															"type": "string",
+															"example": "A salad made with pasta, vegetables (such as tomatoes, cucumbers, and olives), feta cheese, and a dressing made with olive oil and lemon juice."
+														},
+														"time": {
+															"type": "string",
+															"example": "27"
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"401": {
+						"$ref": "#/components/responses/UnauthorizedError"
 					}
 				},
 				"security": [
@@ -469,8 +531,9 @@
 							"schema": {
 								"type": "object",
 								"properties": {
-									"id": {
-										"type": "string"
+									"recipeId": {
+										"type": "string",
+										"required": true
 									}
 								}
 							}
@@ -479,13 +542,13 @@
 				},
 				"responses": {
 					"200": {
-						"description": "returns Id of removed recipe",
+						"description": "returns Id of removed or added recipe",
 						"content": {
 							"application/json": {
 								"schema": {
 									"type": "object",
 									"properties": {
-										"id": {
+										"recipeId": {
 											"type": "string"
 										}
 									}
@@ -500,14 +563,27 @@
 						"$ref": "#/components/responses/UnauthorizedError"
 					},
 					"404": {
-						"description": "Re not found!",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/responses/RecipeNotFoundError"
-								}
-							}
-						}
+						"$ref": "#/components/responses/RecipeNotFoundError"
+					}
+				},
+				"security": [
+					{
+						"jwtAuth": []
+					}
+				]
+			}
+		},
+		"/user/own-recipes": {
+			"get": {
+				"tags": ["User"],
+				"summary": "Get user own recipes",
+				"operationId": "getOwnRecipes",
+				"responses": {
+					"200": {
+						"$ref": "#/components/schemas/Recipes"
+					},
+					"401": {
+						"$ref": "#/components/responses/UnauthorizedError"
 					}
 				},
 				"security": [
@@ -700,7 +776,12 @@
 						"description": "returns 4 most popular recipes",
 						"content": {
 							"application/json": {
-								"schema": { "$ref": "#/components/schemas/RecipeSmalResult" }
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/RecipeSmalResult"
+									}
+								}
 							}
 						}
 					},
@@ -711,14 +792,7 @@
 						"$ref": "#/components/responses/UnauthorizedError"
 					},
 					"404": {
-						"description": "Re not found!",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/responses/RecipesNotFoundError"
-								}
-							}
-						}
+						"$ref": "#/components/responses/RecipesNotFoundError"
 					}
 				},
 				"security": [
@@ -728,7 +802,7 @@
 				]
 			}
 		},
-		"/recipes/add": {
+		"/recipes": {
 			"post": {
 				"tags": ["Recipes"],
 				"summary": "Create new recipe",
@@ -760,6 +834,89 @@
 					},
 					"401": {
 						"$ref": "#/components/responses/UnauthorizedError"
+					}
+				},
+				"security": [
+					{
+						"jwtAuth": []
+					}
+				]
+			},
+			"delete": {
+				"tags": ["Recipes"],
+				"summary": "Remove own recipe",
+				"operationId": "removeOwnRecipe",
+				"requestBody": {
+					"description": "Pass id of recipe that want to delete",
+					"required": ["recipeId"],
+					"content": {
+						"application/json": {
+							"schema": {
+								"recipeId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"204": {
+						"description": "success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "string",
+											"example": 204
+										},
+										"message": {
+											"type": "string",
+											"example": "Removed Successfully"
+										},
+										"data": {
+											"type": "object",
+											"properties": {
+												"removedRecipeId": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"$ref": "#/components/responses/BadRequest"
+					},
+
+					"401": {
+						"$ref": "#/components/responses/UnauthorizedError"
+					},
+					"403": {
+						"description": "Can remove only own recipes",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "integer",
+											"example": 403
+										},
+										"message": {
+											"type": "string",
+											"example": "Failed! Can delete only own recipes"
+										}
+									}
+								}
+							}
+						}
+					},
+					"404": {
+						"$ref": "#/components/responses/RecipesNotFoundError"
 					}
 				},
 				"security": [
@@ -959,17 +1116,25 @@
 								"schema": {
 									"type": "object",
 									"properties": {
-										"Beef": {
+										"status": {
+											"type": "integer",
+											"example": 200
+										},
+										"message": {
+											"type": "string",
+											"example": "Success"
+										},
+										"data": {
 											"type": "array",
 											"items": {
 												"type": "object",
 												"properties": {
-													"title": {
+													"_id": {
 														"type": "string",
-														"example": "Macaroon"
+														"example": "Beef"
 													},
-													"image": {
-														"type": "string"
+													"recipes": {
+														"$ref": "#/components/schemas/RecipeCards"
 													}
 												}
 											}
@@ -1038,24 +1203,7 @@
 						"$ref": "#/components/responses/UnauthorizedError"
 					},
 					"404": {
-						"description": "Recipes not found!",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"status": {
-											"type": "integer",
-											"example": 404
-										},
-										"message": {
-											"type": "string",
-											"example": "Recipes not found!"
-										}
-									}
-								}
-							}
-						}
+						"$ref": "#/components/responses/RecipesNotFoundError"
 					}
 				},
 				"security": [
@@ -1164,6 +1312,9 @@
 			"RecipeSmalResult": {
 				"type": "object",
 				"properties": {
+					"_id": {
+						"type": "string"
+					},
 					"title": {
 						"type": "string",
 						"example": "Macaroon"
@@ -1172,7 +1323,29 @@
 						"type": "string",
 						"example": "Put 2 tablespoons of the oil in a large pot over medium heat. When it’s hot, add onion, carrot, celery and garlic; sprinkle with salt and pepper and cook, stirring occasionally, until vegetables are soft, 5 to 10 minutes...."
 					},
-					"image": {
+					"preview": {
+						"type": "string"
+					}
+				}
+			},
+			"RecipeCards": {
+				"type": "array",
+				"items": {
+					"$ref": "#/components/schemas/RecipeCard"
+				}
+			},
+			"RecipeCard": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string",
+						"example": "Macaroon"
+					},
+
+					"thumb": {
 						"type": "string"
 					}
 				}
@@ -1181,6 +1354,9 @@
 				"type": "object",
 				"required": ["recipeTitle", "description", "category", "cookingTime", "ingredients", "preparation", "image"],
 				"properties": {
+					"_id": {
+						"type": "string"
+					},
 					"title": {
 						"type": "string",
 						"example": "Macaroon"
@@ -1222,14 +1398,21 @@
 					"image": {
 						"type": "string",
 						"format": "binary"
+					},
+					"owner": {
+						"type": "string",
+						"example": "Owner's id"
 					}
 				}
 			},
 			"RecipeWithFavoritesCount": {
 				"type": "object",
-				"required": ["recipeTitle", "description", "category", "cookingTime", "ingredients", "preparation", "image"],
+				"required": ["title", "description", "category", "cookingTime", "ingredients", "preparation", "image"],
 				"properties": {
-					"recipeTitle": {
+					"_id": {
+						"type": "string"
+					},
+					"title": {
 						"type": "string",
 						"example": "Macaroon"
 					},
@@ -1305,6 +1488,9 @@
 				"type": "object",
 				"required": ["name", "measure"],
 				"properties": {
+					"_id": {
+						"type": "string"
+					},
 					"name": {
 						"type": "string",
 						"example": "eggs"
@@ -1316,6 +1502,9 @@
 					"image": {
 						"type": "string",
 						"example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564856/ppyhvetrcdcexkwcgaj3.png"
+					},
+					"family": {
+						"type": "string"
 					}
 				}
 			},
