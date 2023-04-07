@@ -4,6 +4,6 @@ const { isBodyNotEmpty, schemaValidator } = require("../../middlewares");
 const { register, login } = require("../../controllers/auth");
 
 router.post("/register", isBodyNotEmpty(), schemaValidator, register);
-router.post("/login", isBodyNotEmpty(), schemaValidator, login);
+router.post("/login", schemaValidator, login);
 
 module.exports = router;
