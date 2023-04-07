@@ -15,7 +15,7 @@ const updateFavoriteRecipe = async (req, res) => {
 	if (!favoriteRecipeToAdd) {
 		throw httpError(404, "Recipe not found");
 	}
-	
+
 	if (!isFavoriteRecipeAlreadyIn) {
 		await user.addRecipeToFavorites(payload);
 		await recipes.addRecipeToFavorites(payload);
@@ -23,7 +23,7 @@ const updateFavoriteRecipe = async (req, res) => {
 		res.json({
 			status: 200,
 			message: `Recipe - ${favoriteRecipeToAdd.title || ""} is added to favorites successfully`,
-			data: { addedRecipeId: recipeId },
+			data: { recipeId },
 		});
 	} else if (isFavoriteRecipeAlreadyIn) {
 		await user.removeRecipeFromFavorites(payload);
@@ -31,8 +31,9 @@ const updateFavoriteRecipe = async (req, res) => {
 		res.json({
 			status: 200,
 			message: `Recipe - ${favoriteRecipeToAdd.title || ""} removed from favorites successfully`,
-			data: { removedRecipeId: recipeId },
+			recipeId,
 		});
-	}};
+	}
+};
 
-  module.exports = updateFavoriteRecipe;
+module.exports = updateFavoriteRecipe;
