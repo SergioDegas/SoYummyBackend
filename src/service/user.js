@@ -17,7 +17,7 @@ const addToShoppingList = async ({ payload, userId }) => {
 	return {
 		message: `Successfully added to shopping list`,
 		data: {
-			addedIngredient: id,
+			addedIngredientId: id,
 		},
 	};
 };
