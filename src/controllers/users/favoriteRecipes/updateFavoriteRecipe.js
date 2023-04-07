@@ -31,7 +31,7 @@ const updateFavoriteRecipe = async (req, res) => {
 		res.json({
 			status: 200,
 			message: `Recipe - ${favoriteRecipeToAdd.title || ""} removed from favorites successfully`,
-			data: { recipeId },
+			recipeId,
 		});
 	}
 };

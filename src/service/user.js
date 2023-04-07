@@ -6,9 +6,8 @@ const removeFromShoppingList = async ({ userId, id }) => {
 
 	return {
 		message: `Successfully removed from shopping list`,
-		data: {
-			removedIngredientId: id,
-		},
+
+		removedIngredientId: id,
 	};
 };
 const addToShoppingList = async ({ payload, userId }) => {
@@ -16,9 +15,8 @@ const addToShoppingList = async ({ payload, userId }) => {
 	await User.findByIdAndUpdate(userId, { $addToSet: { shoppingList: payload } });
 	return {
 		message: `Successfully added to shopping list`,
-		data: {
-			addedIngredientId: id,
-		},
+
+		addedIngredientId: id,
 	};
 };
 
@@ -61,7 +59,7 @@ const getShoppingList = async (userId) => {
 	]);
 	const shoppingList = result[0]?.fullList;
 	return {
-		data: shoppingList,
+		shoppingList,
 		message: "Success",
 	};
 };
