@@ -218,7 +218,7 @@
 				]
 			}
 		},
-		"/user": {
+		"/update": {
 			"put": {
 				"tags": ["User"],
 				"summary": "Update user information",
@@ -1145,10 +1145,6 @@
 						"type": "string",
 						"example": "example@gmail.com"
 					},
-					"subscription": {
-						"type": "string",
-						"example": "starter"
-					},
 					"avatarUrl": {
 						"type": "string",
 						"example": "public/avatars/63fdff3a26519186b34fdd81.wmark-kievrealty"
@@ -1162,9 +1158,6 @@
 					"verify": {
 						"type": "boolean",
 						"example": false
-					},
-					"token": {
-						"type": "string"
 					}
 				}
 			},
