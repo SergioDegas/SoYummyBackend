@@ -1,4 +1,3 @@
-const { httpError } = require("../../helpers");
 const { categories } = require("../../data");
 
 const getCategoryList = async (req, res) => {

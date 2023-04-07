@@ -3,7 +3,14 @@ const logger = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 
-const { recipesRouter, authRouter, ingredientsRouter, searchRouter, userRouter, ownRecipesRouter } = require("./routes/api");
+const {
+	recipesRouter,
+	authRouter,
+	ingredientsRouter,
+	searchRouter,
+	userRouter,
+	ownRecipesRouter,
+} = require("./routes/api");
 
 const app = express();
 
@@ -27,7 +34,7 @@ app.use((req, res) => {
 	res.status(404).json({ message: "Not found" });
 });
 
-app.use(({ status = 500, message = "Internal Server Error", details = null }, req, res, next) => {
+app.use(({ status = 500, message = "Internal Server Error", details = null }, req, res) => {
 	const result = { message };
 
 	if (details) {
