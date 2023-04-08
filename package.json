@@ -5,6 +5,8 @@
   "scripts": {
     "start": "node ./server.js",
     "start:dev": "nodemon ./server.js",
+    "lint": "eslint \"**/*.js\"",
+		"lint:fix": "eslint --fix **/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,6 +30,7 @@
     "jimp": "^0.22.7",
     "joi": "^17.9.1",
     "jsonwebtoken": "^9.0.0",
+    "lodash": "^4.17.21",
     "lodash.isempty": "^4.4.0",
     "mongoose": "^6.9.2",
     "morgan": "^1.10.0",
@@ -39,7 +42,13 @@
     "yup": "^1.0.2"
   },
   "devDependencies": {
+    "eslint": "^8.37.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-node": "^11.1.0",
     "nodemon": "^2.0.22",
     "prettier": "2.8.7"
-  }
+  },
+  "engines": {
+		"node": ">=10.6.0"
+	}
 }
