@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/SergioDegas/SoYummyBackend#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "bcrypt": "^5.1.0",
     "cloudinary": "^1.35.0",
     "cors": "^2.8.5",
