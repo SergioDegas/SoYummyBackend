@@ -36,7 +36,6 @@ app.use((req, res) => {
 
 app.use(({ status = 500, message = "Internal Server Error", details = null }, req, res) => {
 	const result = { message };
-	console.log("result: ", result);
 
 	if (details) {
 		result.details = details;
