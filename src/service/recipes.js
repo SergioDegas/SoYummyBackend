@@ -50,6 +50,9 @@ const getPopularRecipes = async () =>
 		{
 			$sort: { favoritesCount: -1 },
 		},
+		{
+			$limit: 4,
+		},
 		{ $unset: "favoritesCount" },
 	]);
 
