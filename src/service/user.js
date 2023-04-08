@@ -59,6 +59,7 @@ const getShoppingList = async (userId) => {
 	]);
 	const shoppingList = result[0]?.fullList;
 	return {
+		status: 200,
 		shoppingList,
 		message: "Success",
 	};

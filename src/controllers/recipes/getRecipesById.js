@@ -1,4 +1,3 @@
-const { httpError } = require("../../helpers");
 const { recipes } = require("../../service");
 
 const getRecipeById = async (req, res) => {
@@ -6,11 +5,8 @@ const getRecipeById = async (req, res) => {
 
 	const result = await recipes.getRecipeById(recipeId);
 
-	if (!result) {
-		throw httpError(404, "Recipe not found!");
-	}
-
-	res.status(200).json({
+	// if not not found recipe would be null
+	res.json({
 		status: 200,
 		message: "success",
 		recipe: result,

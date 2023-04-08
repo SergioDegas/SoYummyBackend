@@ -767,7 +767,7 @@
 				]
 			}
 		},
-		"/recipes/popular-recipe": {
+		"/recipes/popular-recipes": {
 			"get": {
 				"tags": ["Recipes"],
 				"description": "get recipes that added more users",
