@@ -13,7 +13,11 @@ const ownRecipesGet = async (req, res) => {
     const result = await Recipe.find({ owner }).skip(skip).limit(limit).populate("owner", "email subscription");
     
     if (!result.length) {
-      throw httpError(404, "Not found");
+      return res.status(200).json({
+        status: 200,
+        message: "success",
+        data: { result: [] },
+      });
     }
 
     res.status(200).json({
