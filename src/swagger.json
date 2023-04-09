@@ -619,7 +619,10 @@
 											"type": "integer",
 											"example": 200
 										},
-										"message": "Success",
+										"message": {
+											"type": "string",
+											"default": "Success"
+										},
 										"data": {
 											"type": "object",
 											"properties": {
@@ -696,13 +699,8 @@
 													"type": "string",
 													"example": "Success"
 												},
-												"data": {
-													"type": "object",
-													"properties": {
-														"addedIngredientId": {
-															"type": "string"
-														}
-													}
+												"addedIngredient": {
+													"$ref": "#/components/schemas/RecipeIngredient"
 												}
 											}
 										},
@@ -767,7 +765,7 @@
 				]
 			}
 		},
-		"/recipes/popular-recipe": {
+		"/recipes/popular-recipes": {
 			"get": {
 				"tags": ["Recipes"],
 				"description": "get recipes that added more users",

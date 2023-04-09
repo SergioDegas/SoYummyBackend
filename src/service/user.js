@@ -1,4 +1,4 @@
-const { User, Recipe } = require("../models");
+const { User, Recipe, Ingredient } = require("../models");
 const { mongoose } = require("mongoose");
 
 const removeFromShoppingList = async ({ userId, id }) => {
@@ -13,10 +13,11 @@ const removeFromShoppingList = async ({ userId, id }) => {
 const addToShoppingList = async ({ payload, userId }) => {
 	const { id } = payload;
 	await User.findByIdAndUpdate(userId, { $addToSet: { shoppingList: payload } });
+	const ingredient = await Ingredient.findById(id);
+	const newIngredient = { ...payload, ...JSON.parse(JSON.stringify(ingredient)) };
 	return {
 		message: `Successfully added to shopping list`,
-
-		addedIngredientId: id,
+		addedIngredient: newIngredient,
 	};
 };
 
@@ -26,12 +27,14 @@ const updateShoppingList = async ({ payload, user }) => {
 
 	// [SM] Check is ingredient already added in a shopping list
 	const isIngredientAlreadyIn = shoppingList.find((item) => item.id.toHexString() === id);
-	return isIngredientAlreadyIn
-		? await removeFromShoppingList({ userId, id })
-		: addToShoppingList({
-				payload: { id, measure },
-				userId,
-		  });
+	if (isIngredientAlreadyIn) {
+		return await removeFromShoppingList({ userId, id });
+	}
+
+	await addToShoppingList({
+		payload: { id, measure },
+		userId,
+	});
 };
 const getShoppingList = async (userId) => {
 	const ObjectId = mongoose.Types.ObjectId;
@@ -59,6 +62,7 @@ const getShoppingList = async (userId) => {
 	]);
 	const shoppingList = result[0]?.fullList;
 	return {
+		status: 200,
 		shoppingList,
 		message: "Success",
 	};
