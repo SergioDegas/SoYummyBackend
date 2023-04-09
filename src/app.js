@@ -40,7 +40,7 @@ app.use(({ status = 500, message = "Internal Server Error", details = null }, re
 	if (details) {
 		result.details = details;
 	}
-	res.status(status).json({ message: "all good" });
+	res.status(status).json(result);
 });
 
 module.exports = app;
