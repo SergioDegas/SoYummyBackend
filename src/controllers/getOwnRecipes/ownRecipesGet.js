@@ -1,5 +1,6 @@
-const { httpError } = require("../../helpers");
 const { ownRecipes } = require("../../service");
+const { httpError } = require("../../helpers");
+
 
 const ownRecipesGet = async (req, res) => {
 	if (!req.user) {
@@ -11,7 +12,7 @@ const ownRecipesGet = async (req, res) => {
 	res.json({
 		status: 200,
 		message: "success",
-		data: { result },
+		result,
 	});
 };
 
