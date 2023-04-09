@@ -1,30 +1,28 @@
-const { Recipe } = require("../../models");
+const { ownRecipes } = require("../../service");
 const { httpError } = require("../../helpers");
 
+
 const ownRecipesDelete = async (req, res) => {
-	if (!req.user) {
-        throw httpError(401, "Access token is missing or invalid");
-	}
-	const { id } = req.params;
-	const { _id: owner } = req.user;
+    const { id } = req.params;
+    const { _id: owner } = req.user;
 
-	const recipe = await Recipe.findOne({ _id: id, owner });
-
+    const recipe = await ownRecipes.recipesServiceGetById({ id, owner });
+    
 	if (!recipe) {
 		throw httpError(404, "Not found");
 	}
 
-	const result = await Recipe.findByIdAndRemove(id);
+    const result = await ownRecipes.deleteRecipe({ owner, id });
+	
+    if (!result) {
+        throw httpError(404, "Not found");
+    }
 
-	if (!result) {
-		throw httpError(404, "Not found");
-	}
-
-	res.status(200).json({
-		status: 200,
-		message: "success",
-		data: { result },
-	});
+    res.json({
+        status: 200,
+        message: "success",
+        result,
+    });
 };
 
-module.exports = {ownRecipesDelete};
+module.exports = { ownRecipesDelete };
