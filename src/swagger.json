@@ -414,54 +414,6 @@
 			}
 		},
 		"/user/favorites": {
-			"post": {
-				"tags": ["User"],
-				"description": "add selected recipe to user favorites list",
-				"requestBody": {
-					"required": true,
-					"description": "pass recipe id in params",
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"recipeId": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Recipe added to favorites succesfully",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Recipes"
-								}
-							}
-						}
-					},
-					"400": {
-						"$ref": "#/components/responses/BadRequest"
-					},
-					"401": {
-						"$ref": "#/components/responses/UnauthorizedError"
-					},
-					"404": {
-						"description": "Re not found!",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/responses/RecipeNotFoundError"
-								}
-							}
-						}
-					}
-				}
-			},
 			"get": {
 				"tags": ["User"],
 				"responses": {
