@@ -9,7 +9,6 @@ const {
 	ingredientsRouter,
 	searchRouter,
 	userRouter,
-	ownRecipesRouter,
 } = require("./routes/api");
 
 const app = express();
@@ -27,7 +26,6 @@ app.use("/user", userRouter);
 app.use("/recipes", recipesRouter);
 app.use("/ingredients", ingredientsRouter);
 app.use("/search", searchRouter);
-app.use("/own-recipes", ownRecipesRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {

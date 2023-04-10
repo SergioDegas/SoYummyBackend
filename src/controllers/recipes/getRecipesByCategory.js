@@ -11,14 +11,11 @@ const getRecipesByCategory = async (req, res) => {
 	}
 
 	const result = await recipes.getRecipesByCategory(category, skipPageHandler(page, limit), limitHandler(limit));
-	const totalResult = await recipes.getRecipesByCategory(category, 0, 0);
-	const totalPages = Math.ceil(totalResult.length / limit);
 
 	res.json({
 		status: 200,
 		message: "success",
-		recipes: result,
-		totalPages,
+		...result,
 	});
 };
 

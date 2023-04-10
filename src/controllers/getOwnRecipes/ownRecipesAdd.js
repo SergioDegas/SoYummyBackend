@@ -1,28 +1,25 @@
-const { Recipe } = require("../../models");
+const { ownRecipes } = require("../../service");
 const { httpError } = require("../../helpers");
+
 
 const ownRecipesAdd = async (req, res) => {
   if (!req.user) {
     throw httpError(401, "Access token is missing or invalid");
   }
 
-  if (!req.file) {
-    throw httpError(400, "No file uploaded");
-  }
-
   const { _id: owner } = req.user;
   const thumb = req.file.path;
 
-  const result = await Recipe.create({
-    ...req.body,
+  const result = await ownRecipes.createRecipe({
+    body: req.body,
     owner,
     thumb,
   });
-
-  res.status(201).json({
+  
+  res.json({
     status: 201,
     message: "success",
-    data: { result },
+    result,
   });
 };
 

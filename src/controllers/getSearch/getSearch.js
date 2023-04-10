@@ -5,17 +5,17 @@ const getSearch = async (req, res) => {
 	const recipes = await search.searchService(searchTerm, page, limit, searchBy);
 
 	if (!recipes || recipes.length === 0) {
-		return res.status(200).json({
+		return res.json({
 			status: 200,
 			message: "success",
 			data: { recipes: [] },
 		});
 	}
 
-	res.status(200).json({
+	res.json({
 		status: 200,
 		message: "success",
-		data: { recipes: recipes },
+		data: { recipes },
 	});
 };
 
