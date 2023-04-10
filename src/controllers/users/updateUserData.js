@@ -5,8 +5,9 @@ const updateUserData = async (req, res) => {
   const file = req.file.path;
   if (file) {
     await User.findByIdAndUpdate(id, { name: req.body.name, avatarURL: req.file.path });
+  } else {
+    	await User.findByIdAndUpdate(id, { name: req.body.name });
   }
-	await User.findByIdAndUpdate(id, { name: req.body.name });
 	res.status().json({
 		description: "success",
 	});
