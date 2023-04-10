@@ -82,4 +82,6 @@ const searchService = async (searchTerm, page = 1, limit = 8, searchBy) => {
   ]);
 };
 
-module.exports = { searchService };
+
+
+module.exports = { searchService};

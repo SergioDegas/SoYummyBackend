@@ -6,14 +6,10 @@ const getMainPage = async (req, res) => {
 
 	const result = await recipes.getRecipesBySet(skipPageHandler(page, limit), limitHandler(limit));
 
-	if (!result) {
-		throw httpError(404, "Recipes not found!");
-	}
-
 	res.status(200).json({
 		status: 200,
 		message: "success",
-		result,
+		...result,
 	});
 };
 

@@ -8,7 +8,7 @@ const joiOwnRecipesSchema = Joi.object({
 	instructions: Joi.string().required(),
 	description: Joi.string(),
 	area: Joi.string(),
-	thumb: Joi.string().required(),
+	thumb: Joi.string(),
 	preview: Joi.string(),
 	time: Joi.number().required(),
 	imageURL: Joi.string(),
