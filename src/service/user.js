@@ -71,7 +71,8 @@ const getShoppingList = async (userId) => {
 const getFavoriteRecipes = async ({ skip, limit, favoriteRecipes }) =>
 	await Recipe.find({ _id: { $in: favoriteRecipes } }, { title: 1, description: 1, time: 1, instructions: 1, thumb: 1 })
 		.skip(skip)
-		.limit(limit);
+		.limit(limit)
+		.sort({ updatedAt: "descending" });
 
 const removeRecipeFromFavorites = async ({ userId, recipeId }) =>
 	await User.findByIdAndUpdate(userId, { $pull: { favoriteRecipes: recipeId } });
