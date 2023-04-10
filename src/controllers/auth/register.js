@@ -1,5 +1,4 @@
 const { uid } = require("uid");
-const { httpError } = require("../../helpers");
 const { User } = require("../../models");
 
 const login = require("./login");
