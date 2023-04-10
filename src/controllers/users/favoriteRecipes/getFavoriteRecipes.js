@@ -14,6 +14,7 @@ const getFavoriteRecipes = async (req, res) => {
 		status: 200,
 		message: "success",
 		recipes,
+		totalItems: favoriteRecipes.length || 0,
 	});
 };
 module.exports = getFavoriteRecipes;
