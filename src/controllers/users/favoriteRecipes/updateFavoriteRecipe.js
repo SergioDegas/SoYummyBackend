@@ -23,7 +23,6 @@ const updateFavoriteRecipe = async (req, res) => {
 	if (!isFavoriteRecipeAlreadyIn) {
 		await user.addRecipeToFavorites(payload);
 		await recipes.addRecipeToFavorites(payload);
-
 		res.json({
 			status: 200,
 			message: `Recipe - ${favoriteRecipeToAdd.title || ""} is added to favorites successfully`,
