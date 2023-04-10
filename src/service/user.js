@@ -13,7 +13,7 @@ const removeFromShoppingList = async ({ userId, id }) => {
 const addToShoppingList = async ({ payload, userId }) => {
 	const { id } = payload;
 	await User.findByIdAndUpdate(userId, { $addToSet: { shoppingList: payload } });
-	const ingredient = await Ingredient.findById(id);
+	const ingredient = await Ingredient.findById(id, { _id: 0 });
 	const newIngredient = { ...payload, ...JSON.parse(JSON.stringify(ingredient)) };
 	return {
 		message: `Successfully added to shopping list`,
@@ -31,7 +31,7 @@ const updateShoppingList = async ({ payload, user }) => {
 		return await removeFromShoppingList({ userId, id });
 	}
 
-	await addToShoppingList({
+	return await addToShoppingList({
 		payload: { id, measure },
 		userId,
 	});
