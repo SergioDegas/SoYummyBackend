@@ -1,8 +1,12 @@
 const { User } = require("../../models");
 
 const updateUserData = async (req, res) => {
-	const id = req.user._id;
-	await User.findByIdAndUpdate(id, { name: req.body.name, avatarURL: req.file.path });
+  const id = req.user._id;
+  const file = req.file.path;
+  if (file) {
+    await User.findByIdAndUpdate(id, { name: req.body.name, avatarURL: req.file.path });
+  }
+	await User.findByIdAndUpdate(id, { name: req.body.name });
 	res.status().json({
 		description: "success",
 	});
