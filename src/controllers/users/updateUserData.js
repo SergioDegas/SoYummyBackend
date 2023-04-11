@@ -6,7 +6,7 @@ const updateUserData = async (req, res) => {
   if (req.file) {
     await User.findByIdAndUpdate(id, { name: name, avatarURL: req.file.path })
   } else {
-    await User.findByIdAndUpdate(id, { name });
+    await User.findByIdAndUpdate(id, { name: name });
   }
 
 	res.json({
