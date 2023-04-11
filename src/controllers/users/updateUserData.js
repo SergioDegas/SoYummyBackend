@@ -16,7 +16,8 @@ const updateUserData = async (req, res) => {
 
 	res.json({
 		status: 200,
-		message: "success"
+    message: "success",
+    user: newUser,
 	});
 };
 
