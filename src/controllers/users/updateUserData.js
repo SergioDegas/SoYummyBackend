@@ -2,7 +2,7 @@ const { User } = require("../../models");
 
 const updateUserData = async (req, res) => {
   const id = req.user._id;
-	const avatarURL = req.body.image;
+	const avatarURL = req.file.path;
 	const { name } = req.body;
 	const newUser = avatarURL
 		? await User.findByIdAndUpdate(id, { name, avatarURL }, { new: true }).select({
@@ -17,7 +17,7 @@ const updateUserData = async (req, res) => {
 	res.json({
 		status: 200,
     message: "success",
-    user: newUser,
+    // user: newUser,
 	});
 };
 
