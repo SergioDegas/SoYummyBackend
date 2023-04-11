@@ -8,14 +8,14 @@ const getSearch = async (req, res) => {
 		return res.json({
 			status: 200,
 			message: "success",
-			data: { recipes: [] },
+			recipes: {recipes: []},
 		});
 	}
 
 	res.json({
 		status: 200,
 		message: "success",
-		data: { recipes },
+		recipes,
 	});
 };
 
