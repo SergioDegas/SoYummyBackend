@@ -628,10 +628,11 @@
 						"application/json": {
 							"schema": {
 								"type": "object",
-								"required": ["id"],
+								"required": ["id", "measure"],
 								"properties": {
 									"ingredientId": {
-										"type": "string"
+										"type": "string",
+										"example": "640c2dd963a319ea671e366d"
 									},
 									"measure": {
 										"type": "string",
@@ -772,7 +773,7 @@
 					"content": {
 						"multipart/form-data": {
 							"schema": {
-								"$ref": "#/components/schemas/Recipe"
+								"$ref": "#/components/schemas/AddRecipeRequest"
 							}
 						}
 					}
@@ -1293,6 +1294,60 @@
 					"$ref": "#/components/schemas/RecipeCard"
 				}
 			},
+			"AddRecipeRequest": {
+				"type": "object",
+				"required": ["title", "instructions", "category", "time", "ingredients", "description", "image"],
+
+				"properties": {
+					"title": {
+						"type": "string",
+						"example": "Macaroon"
+					},
+					"description": {
+						"type": "string",
+						"example": "it's an awesome cookies"
+					},
+					"category": {
+						"type": "string",
+						"example": "Dessert"
+					},
+					"time": {
+						"type": "string",
+						"default": "2 hours"
+					},
+					"ingredients": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string",
+									"example": "640c2dd963a319ea671e366d"
+								},
+								"measure": {
+									"type": "string",
+									"example": "2 tbs"
+								}
+							}
+						},
+						"example": [
+							{
+								"id": "640c2dd963a319ea671e366d",
+								"measure": "2 tbs"
+							}
+						]
+					},
+					"instructions": {
+						"type": "string",
+						"example": "beat eggs until smooth"
+					},
+
+					"image": {
+						"type": "string",
+						"format": "binary"
+					}
+				}
+			},
 			"RecipeCard": {
 				"type": "object",
 				"properties": {
@@ -1311,7 +1366,7 @@
 			},
 			"Recipe": {
 				"type": "object",
-				"required": ["recipeTitle", "description", "category", "cookingTime", "ingredients", "preparation", "image"],
+				"required": ["recipeTitle", "description", "category", "time", "ingredients", "instructions", "thumb"],
 				"properties": {
 					"_id": {
 						"type": "string"
@@ -1320,15 +1375,19 @@
 						"type": "string",
 						"example": "Macaroon"
 					},
+					"instructions": {
+						"type": "string",
+						"example": "Put 2 tablespoons of the oil in a large pot "
+					},
 					"description": {
 						"type": "string",
 						"example": "it's an awesome cookies"
 					},
 					"category": {
 						"type": "string",
-						"example": "dessert"
+						"example": "Dessert"
 					},
-					"cookingTime": {
+					"time": {
 						"type": "string",
 						"default": "2 hours"
 					},
@@ -1340,7 +1399,6 @@
 						}
 					},
 					"popularity": {
-						"description": "Depends on how many users added it to favorite",
 						"type": "integer",
 						"default": 0
 					},
@@ -1350,11 +1408,11 @@
 							"$ref": "#/components/schemas/RecipeIngredients"
 						}
 					},
-					"preparation": {
+					"instructions": {
 						"type": "string",
 						"example": "beat eggs until smooth"
 					},
-					"image": {
+					"thumb": {
 						"type": "string",
 						"format": "binary"
 					},
@@ -1364,9 +1422,10 @@
 					}
 				}
 			},
+
 			"RecipeWithFavoritesCount": {
 				"type": "object",
-				"required": ["title", "description", "category", "cookingTime", "ingredients", "preparation", "image"],
+				"required": ["title", "description", "category", "time", "ingredients", "instructions", "image"],
 				"properties": {
 					"_id": {
 						"type": "string"
@@ -1379,9 +1438,13 @@
 						"type": "string",
 						"example": "it's an awesome cookies"
 					},
+					"instructions": {
+						"type": "string",
+						"example": "Put 2 tablespoons of the oil in a large pot "
+					},
 					"category": {
 						"type": "string",
-						"example": "dessert"
+						"example": "Dessert"
 					},
 					"time": {
 						"type": "string"
@@ -1392,7 +1455,7 @@
 							"$ref": "#/components/schemas/RecipeIngredients"
 						}
 					},
-					"preparation": {
+					"instructions": {
 						"type": "string",
 						"example": "beat eggs until smooth"
 					},

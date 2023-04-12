@@ -8,9 +8,9 @@ const ownRecipesAdd = async (req, res) => {
 
 	const { _id: owner } = req.user;
 	const thumb = req.file.path;
-
+	const ingredients = JSON.parse(req.body.ingredients);
 	const result = await ownRecipes.createRecipe({
-		body: req.body,
+		body: { ...req.body, ingredients },
 		owner,
 		thumb,
 	});
