@@ -1,14 +1,14 @@
-const { uid } = require("uid");
-const { User } = require("../../models");
+const { uid } = require('uid');
+const { User } = require('../../models');
 
-const login = require("./login");
-require("dotenv").config();
+const login = require('./login');
+require('dotenv').config();
 
 const register = async (req, res) => {
 	const { name, email, password, avatarURL } = req.body;
 	const user = await User.findOne({ email });
 	if (user) {
-		res.status(409).json({ status: 409, message: "Email in use" });
+		res.status(409).json({ status: 409, message: 'Email in use' });
 	}
 	const verificationToken = uid();
 	const newUser = await User.create({

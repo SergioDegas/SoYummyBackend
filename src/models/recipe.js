@@ -1,17 +1,17 @@
-const { Schema, model } = require("mongoose");
-const { categories } = require("../data");
+const { Schema, model } = require('mongoose');
+const { categories } = require('../data');
 
 const recipeModel = new Schema(
 	{
 		title: {
 			type: String,
-			required: [true, "Set title for recipe"],
+			required: [true, 'Set title for recipe'],
 		},
 
 		category: {
 			type: String,
 			enum: [...categories],
-			required: [true, "Set category for recipe"],
+			required: [true, 'Set category for recipe'],
 		},
 
 		area: {
@@ -20,7 +20,7 @@ const recipeModel = new Schema(
 
 		instructions: {
 			type: String,
-			required: [true, "Set instructions for recipe"],
+			required: [true, 'Set instructions for recipe'],
 		},
 
 		description: {
@@ -29,7 +29,7 @@ const recipeModel = new Schema(
 
 		thumb: {
 			type: String,
-			required: [true, "Set image for recipe"],
+			required: [true, 'Set image for recipe'],
 		},
 
 		preview: {
@@ -46,7 +46,7 @@ const recipeModel = new Schema(
 			default: 0,
 		},
 
-		favorites:{
+		favorites: {
 			type: [String],
 			default: [],
 		},
@@ -55,7 +55,6 @@ const recipeModel = new Schema(
 			type: String,
 		},
 
-		
 		ingredients: {
 			type: Array,
 			default: [],
@@ -63,12 +62,12 @@ const recipeModel = new Schema(
 
 		owner: {
 			type: Schema.Types.ObjectId,
-			ref: "user",
+			ref: 'user',
 		},
 	},
-	{ versionKey: false, timestamps: true },
+	{ versionKey: false, timestamps: true }
 );
 
-const Recipe = model("recipe", recipeModel);
+const Recipe = model('recipe', recipeModel);
 
 module.exports = Recipe;

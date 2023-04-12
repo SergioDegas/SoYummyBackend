@@ -1,5 +1,5 @@
-const { User, Recipe, Ingredient } = require("../models");
-const { mongoose } = require("mongoose");
+const { User, Recipe, Ingredient } = require('../models');
+const { mongoose } = require('mongoose');
 
 const removeFromShoppingList = async ({ userId, id }) => {
 	await User.findByIdAndUpdate(userId, { $pull: { shoppingList: { id } } });
@@ -41,30 +41,30 @@ const getShoppingList = async (userId) => {
 
 	const result = await User.aggregate([
 		{ $match: { _id: ObjectId(`${userId}`) } },
-		{ $lookup: { from: "ingredients", localField: "shoppingList.id", foreignField: "_id", as: "ingredientsInfo" } },
+		{ $lookup: { from: 'ingredients', localField: 'shoppingList.id', foreignField: '_id', as: 'ingredientsInfo' } },
 		{
 			$set: {
 				fullList: {
 					$map: {
-						input: "$shoppingList",
+						input: '$shoppingList',
 						in: {
 							$mergeObjects: [
-								"$$this",
-								{ $arrayElemAt: ["$ingredientsInfo", { $indexOfArray: ["$ingredientsInfo._id", "$$this.id"] }] },
+								'$$this',
+								{ $arrayElemAt: ['$ingredientsInfo', { $indexOfArray: ['$ingredientsInfo._id', '$$this.id'] }] },
 							],
 						},
 					},
 				},
 			},
 		},
-		{ $unset: ["ingredientsInfo", "ingredients.id"] },
+		{ $unset: ['ingredientsInfo', 'ingredients.id'] },
 		{ $project: { fullList: 1, _id: 0 } },
 	]);
 	const shoppingList = result[0]?.fullList;
 	return {
 		status: 200,
 		shoppingList,
-		message: "Success",
+		message: 'Success',
 	};
 };
 

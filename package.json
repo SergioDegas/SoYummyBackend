@@ -1,53 +1,55 @@
 {
-
-  "name": "soyummybackend",
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "start": "node ./server.js",
-    "start:dev": "nodemon ./server.js",
-    "lint": "eslint \"**/*.js\"",
-    "lint:fix": "eslint --fix **/*.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SergioDegas/SoYummyBackend.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/SergioDegas/SoYummyBackend/issues"
-  },
-  "homepage": "https://github.com/SergioDegas/SoYummyBackend#readme",
-  "dependencies": {
-    "@sendgrid/mail": "^7.7.0",
-    "bcrypt": "^5.1.0",
-    "cloudinary": "^1.35.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "jimp": "^0.22.7",
-    "joi": "^17.9.1",
-    "jsonwebtoken": "^9.0.0",
-    "lodash": "^4.17.21",
-    "lodash.isempty": "^4.4.0",
-    "mongoose": "^6.9.2",
-    "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.1",
-    "multer-storage-cloudinary": "^4.0.0",
-    "nodemailer": "^6.9.1",
-    "swagger-ui-express": "^4.6.2",
-    "uid": "^2.0.1",
-    "yup": "^1.0.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22",
-    "prettier": "2.8.7"
-  },
-  "engines": {
-    "node": ">=10.6.0"
-  }
-
+	"name": "soyummybackend",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"start": "node ./server.js",
+		"start:dev": "nodemon ./server.js",
+		"lint": "eslint \"**/*.js\"",
+		"lint:fix": "eslint --fix **/*.js",
+		"format:check": "prettier --check .",
+		"format:write": "prettier --write .",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/SergioDegas/SoYummyBackend.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/SergioDegas/SoYummyBackend/issues"
+	},
+	"homepage": "https://github.com/SergioDegas/SoYummyBackend#readme",
+	"dependencies": {
+		"@sendgrid/mail": "^7.7.0",
+		"bcrypt": "^5.1.0",
+		"cloudinary": "^1.35.0",
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"jimp": "^0.22.7",
+		"joi": "^17.9.1",
+		"jsonwebtoken": "^9.0.0",
+		"lodash": "^4.17.21",
+		"mongoose": "^6.9.2",
+		"morgan": "^1.10.0",
+		"multer": "^1.4.5-lts.1",
+		"multer-storage-cloudinary": "^4.0.0",
+		"nodemailer": "^6.9.1",
+		"swagger-ui-express": "^4.6.2",
+		"uid": "^2.0.1",
+		"yup": "^1.0.2"
+	},
+	"devDependencies": {
+		"eslint": "^8.38.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-node": "^11.1.0",
+		"nodemon": "^2.0.22",
+		"prettier": "^2.8.7"
+	},
+	"engines": {
+		"node": ">=10.6.0"
+	}
 }

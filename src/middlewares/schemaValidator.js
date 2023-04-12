@@ -1,9 +1,9 @@
-const _ = require("lodash");
-const Schemas = require("../schemas");
+const _ = require('lodash');
+const Schemas = require('../schemas');
 
 const schemaValidator = (req, res, next) => {
 	const method = req.method.toLowerCase();
-	const _supportedMethods = ["post", "put", "patch"];
+	const _supportedMethods = ['post', 'put', 'patch'];
 	const _validationOptions = {
 		abortEarly: false, // abort after the last validation error
 		allowUnknown: true, // allow unknown keys that will be ignored
@@ -21,17 +21,17 @@ const schemaValidator = (req, res, next) => {
 
 		if (error) {
 			const JoiError = {
-				status: "failed",
-				message: "At least one of the field is invalid",
+				status: 'failed',
+				message: 'At least one of the field is invalid',
 				details: _.map(error.details, ({ message }) => ({
-					message: message.replace(/['"]/g, ""),
+					message: message.replace(/['"]/g, ''),
 				})),
 				error,
 			};
 			// Custom Error
 			const CustomError = {
-				status: "failed",
-				error: "Invalid request data. Please review request and try again.",
+				status: 'failed',
+				error: 'Invalid request data. Please review request and try again.',
 			};
 			// Send back the JSON error response
 			res.status(400).json(JoiError ?? CustomError);

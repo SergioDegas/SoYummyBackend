@@ -1,4 +1,4 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
 const subscribeSchema = Joi.object({
 	inputEmail: Joi.string().required(),

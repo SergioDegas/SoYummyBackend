@@ -1,4 +1,4 @@
-const { recipes } = require("../../service");
+const { recipes } = require('../../service');
 
 const getRecipeById = async (req, res) => {
 	const { id: recipeId } = req.params;
@@ -8,7 +8,7 @@ const getRecipeById = async (req, res) => {
 	// if not not found recipe would be null
 	res.json({
 		status: 200,
-		message: "success",
+		message: 'success',
 		recipe: result,
 	});
 };

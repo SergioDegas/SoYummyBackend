@@ -1,5 +1,5 @@
-const getShoppingList = require("./getShoppingList");
-const updateShoppingList = require("./updateShoppingList");
+const getShoppingList = require('./getShoppingList');
+const updateShoppingList = require('./updateShoppingList');
 
 module.exports = {
 	getShoppingList,

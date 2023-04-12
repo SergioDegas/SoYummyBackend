@@ -1,10 +1,10 @@
-const { ctrlWrapper } = require("../../helpers");
+const { ctrlWrapper } = require('../../helpers');
 
-const getCategoryList = require("./getCategoryList");
-const getPopularRecipes = require("./getPopularRecipes");
-const getRecipesByCategory = require("./getRecipesByCategory");
-const getRecipeById = require("./getRecipesById");
-const getRecipesBySet = require("./getRecipesBySet");
+const getCategoryList = require('./getCategoryList');
+const getPopularRecipes = require('./getPopularRecipes');
+const getRecipesByCategory = require('./getRecipesByCategory');
+const getRecipeById = require('./getRecipesById');
+const getRecipesBySet = require('./getRecipesBySet');
 
 module.exports = {
 	getCategoryList: ctrlWrapper(getCategoryList),
