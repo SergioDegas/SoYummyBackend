@@ -1,4 +1,4 @@
-const categories = require("../data/categories");
+const categories = require('../data/categories');
 
 module.exports = {
 	categories,

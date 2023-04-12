@@ -1,9 +1,9 @@
-const { mongoose } = require("mongoose");
-const { Recipe } = require("../models");
+const { mongoose } = require('mongoose');
+const { Recipe } = require('../models');
 
 const getRecipesByCategory = async (category, skip, limit) => {
-	const recipes = await Recipe.find({ category }, "title thumb")
-		.sort({ updatedAt: "descending" })
+	const recipes = await Recipe.find({ category }, 'title thumb')
+		.sort({ updatedAt: 'descending' })
 		.skip(skip)
 		.limit(limit);
 	const total = await Recipe.find({ category }).countDocuments();
@@ -17,23 +17,23 @@ const getRecipeById = async (recipeId) => {
 
 	const result = await Recipe.aggregate([
 		{ $match: { _id: ObjectId(`${recipeId}`) } },
-		{ $lookup: { from: "ingredients", localField: "ingredients.id", foreignField: "_id", as: "ingredientsInfo" } },
+		{ $lookup: { from: 'ingredients', localField: 'ingredients.id', foreignField: '_id', as: 'ingredientsInfo' } },
 		{
 			$set: {
 				ingredients: {
 					$map: {
-						input: "$ingredients",
+						input: '$ingredients',
 						in: {
 							$mergeObjects: [
-								"$$this",
-								{ $arrayElemAt: ["$ingredientsInfo", { $indexOfArray: ["$ingredientsInfo._id", "$$this.id"] }] },
+								'$$this',
+								{ $arrayElemAt: ['$ingredientsInfo', { $indexOfArray: ['$ingredientsInfo._id', '$$this.id'] }] },
 							],
 						},
 					},
 				},
 			},
 		},
-		{ $unset: ["ingredientsInfo", "ingredients.id"] },
+		{ $unset: ['ingredientsInfo', 'ingredients.id'] },
 	]);
 
 	return result.length > 0 ? result[0] : null;
@@ -45,13 +45,13 @@ const getRecipesBySet = async (skip, limit) => {
 			$facet: {
 				data: [
 					{ $sort: { category: 1, updatedAt: -1 } },
-					{ $group: { _id: "$category", recipes: { $push: { title: "$title", thumb: "$thumb", _id: "$_id" } } } },
+					{ $group: { _id: '$category', recipes: { $push: { title: '$title', thumb: '$thumb', _id: '$_id' } } } },
 					{ $sort: { _id: 1 } },
-					{ $project: { recipes: { $slice: ["$recipes", 4] } } },
+					{ $project: { recipes: { $slice: ['$recipes', 4] } } },
 					{ $skip: skip },
 					{ $limit: limit },
 				],
-				total: [{ $group: { _id: "$category" } }, { $count: "totalPages" }],
+				total: [{ $group: { _id: '$category' } }, { $count: 'totalPages' }],
 			},
 		},
 	]);
@@ -65,7 +65,7 @@ const getRecipesBySet = async (skip, limit) => {
 const getPopularRecipes = async () =>
 	await Recipe.aggregate([
 		{
-			$project: { title: 1, preview: 1, instructions: 1, favoritesCount: { $size: { $ifNull: ["$favorites", []] } } },
+			$project: { title: 1, preview: 1, instructions: 1, favoritesCount: { $size: { $ifNull: ['$favorites', []] } } },
 		},
 		{
 			$sort: { favoritesCount: -1 },
@@ -73,7 +73,7 @@ const getPopularRecipes = async () =>
 		{
 			$limit: 4,
 		},
-		{ $unset: "favoritesCount" },
+		{ $unset: 'favoritesCount' },
 	]);
 
 const removeRecipeFromFavorites = async ({ userId, recipeId }) =>

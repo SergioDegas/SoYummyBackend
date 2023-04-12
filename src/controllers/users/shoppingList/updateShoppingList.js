@@ -1,5 +1,5 @@
-const { user } = require("../../../service");
-require("dotenv").config();
+const { user } = require('../../../service');
+require('dotenv').config();
 
 const updateShoppingList = async (req, res) => {
 	const { shoppingList = [], id: userId } = req.user;

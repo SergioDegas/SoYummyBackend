@@ -1,5 +1,5 @@
-const { skipPageHandler, limitHandler } = require("../../helpers");
-const { recipes } = require("../../service");
+const { skipPageHandler, limitHandler } = require('../../helpers');
+const { recipes } = require('../../service');
 
 const getMainPage = async (req, res) => {
 	const { page = 1, limit = 4 } = req.query;
@@ -8,7 +8,7 @@ const getMainPage = async (req, res) => {
 
 	res.status(200).json({
 		status: 200,
-		message: "success",
+		message: 'success',
 		...result,
 	});
 };

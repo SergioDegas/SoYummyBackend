@@ -1,7 +1,7 @@
-const getFavoriteRecipes = require("./getFavoriteRecipes");
-const updateFavoriteRecipe = require("./updateFavoriteRecipe");
+const getFavoriteRecipes = require('./getFavoriteRecipes');
+const updateFavoriteRecipe = require('./updateFavoriteRecipe');
 
-module.exports = {	
-	getFavoriteRecipes,	
+module.exports = {
+	getFavoriteRecipes,
 	updateFavoriteRecipe,
 };

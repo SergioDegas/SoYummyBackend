@@ -1,5 +1,5 @@
-const { skipPageHandler } = require("../../../helpers");
-const { user } = require("../../../service");
+const { skipPageHandler } = require('../../../helpers');
+const { user } = require('../../../service');
 
 const getFavoriteRecipes = async (req, res) => {
 	const { favoriteRecipes } = req.user;
@@ -12,7 +12,7 @@ const getFavoriteRecipes = async (req, res) => {
 	});
 	res.json({
 		status: 200,
-		message: "success",
+		message: 'success',
 		recipes,
 		totalItems: favoriteRecipes.length || 0,
 	});

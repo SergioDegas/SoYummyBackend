@@ -1,11 +1,11 @@
-const { Ingredient } = require("../../models");
+const { Ingredient } = require('../../models');
 
 const getIngredients = async (req, res) => {
 	const ingredients = await Ingredient.find();
 
 	res.json({
 		status: 200,
-		message: "success",
+		message: 'success',
 		ingredients,
 	});
 };
