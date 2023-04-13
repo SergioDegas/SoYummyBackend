@@ -41,7 +41,7 @@ const getRecipesBySet = async (skip, limit) => {
 		{
 			$facet: {
 				data: [
-					{ $sort: { category: 1, updatedAt: -1 } },
+					{ $sort: { category: 1, createdAt: -1 } },
 					{ $group: { _id: '$category', recipes: { $push: { title: '$title', thumb: '$thumb', _id: '$_id' } } } },
 					{ $sort: { _id: 1 } },
 					{ $project: { recipes: { $slice: ['$recipes', 4] } } },
