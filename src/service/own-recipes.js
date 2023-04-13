@@ -8,7 +8,7 @@ const recipesServiceGet = async ({ user, query }) => {
 	const result = await Recipe.find({ owner })
 		.skip(skip)
 		.limit(limit)
-		.sort({ updatedAt: -1 })
+		.sort({ createdAt: -1 })
 		.populate('owner', 'email subscription');
 	const totalItems = await Recipe.find({ owner }).countDocuments();
 
