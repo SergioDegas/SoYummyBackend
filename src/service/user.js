@@ -1,4 +1,4 @@
-const { User, Recipe } = require("../models");
+const { User, Recipe, Ingredient } = require("../models");
 const { mongoose } = require("mongoose");
 
 const removeFromShoppingList = async ({ userId, id }) => {
@@ -6,19 +6,18 @@ const removeFromShoppingList = async ({ userId, id }) => {
 
 	return {
 		message: `Successfully removed from shopping list`,
-		data: {
-			removedIngredientId: id,
-		},
+
+		removedIngredientId: id,
 	};
 };
 const addToShoppingList = async ({ payload, userId }) => {
 	const { id } = payload;
 	await User.findByIdAndUpdate(userId, { $addToSet: { shoppingList: payload } });
+	const ingredient = await Ingredient.findById(id, { _id: 0 });
+	const newIngredient = { ...payload, ...JSON.parse(JSON.stringify(ingredient)) };
 	return {
 		message: `Successfully added to shopping list`,
-		data: {
-			addedIngredient: id,
-		},
+		addedIngredient: newIngredient,
 	};
 };
 
@@ -28,12 +27,14 @@ const updateShoppingList = async ({ payload, user }) => {
 
 	// [SM] Check is ingredient already added in a shopping list
 	const isIngredientAlreadyIn = shoppingList.find((item) => item.id.toHexString() === id);
-	return isIngredientAlreadyIn
-		? await removeFromShoppingList({ userId, id })
-		: addToShoppingList({
-				payload: { id, measure },
-				userId,
-		  });
+	if (isIngredientAlreadyIn) {
+		return await removeFromShoppingList({ userId, id });
+	}
+
+	return await addToShoppingList({
+		payload: { id, measure },
+		userId,
+	});
 };
 const getShoppingList = async (userId) => {
 	const ObjectId = mongoose.Types.ObjectId;
@@ -61,13 +62,16 @@ const getShoppingList = async (userId) => {
 	]);
 	const shoppingList = result[0]?.fullList;
 	return {
-		data: shoppingList,
+		status: 200,
+		shoppingList,
 		message: "Success",
 	};
 };
 
-const getFavoriteRecipes = async (recipes) =>
-	await Recipe.find({ _id: { $in: recipes } }, { title: 1, description: 1, time: 1, instructions: 1 });
+const getFavoriteRecipes = async ({ skip, limit, favoriteRecipes }) =>
+	await Recipe.find({ _id: { $in: favoriteRecipes } }, { title: 1, description: 1, time: 1, instructions: 1, thumb: 1 })
+		.skip(skip)
+		.limit(limit);
 
 const removeRecipeFromFavorites = async ({ userId, recipeId }) =>
 	await User.findByIdAndUpdate(userId, { $pull: { favoriteRecipes: recipeId } });

@@ -1,5 +1,4 @@
 const { uid } = require("uid");
-const { httpError } = require("../../helpers");
 const { User } = require("../../models");
 
 const login = require("./login");
@@ -9,7 +8,7 @@ const register = async (req, res) => {
 	const { name, email, password, avatarURL } = req.body;
 	const user = await User.findOne({ email });
 	if (user) {
-		throw httpError(409, "Email in use");
+		res.status(409).json({ status: 409, message: "Email in use" });
 	}
 	const verificationToken = uid();
 	const newUser = await User.create({

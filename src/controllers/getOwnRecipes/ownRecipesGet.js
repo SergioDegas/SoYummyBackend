@@ -1,12 +1,19 @@
-const { Recipe } = require("../../models");
+const { ownRecipes } = require("../../service");
+const { httpError } = require("../../helpers");
+
 
 const ownRecipesGet = async (req, res) => {
-    const { _id } = req.user;
-    const {page = 1, limit = 20, favorite} = req.query;
-    const filter = favorite ? { owner: _id, favorite} : { owner: _id };
-    const skip = (page - 1) * limit;
-    const result = await Recipe.find(filter, "", {skip, limit}).populate("owner", "email subscription");
-    res.status(200).json(result);
-  };
+	if (!req.user) {
+		throw httpError(401, "Access token is missing or invalid");
+	}
 
-module.exports = ownRecipesGet;
+	const result = await ownRecipes.recipesServiceGet({ user: req.user, query: req.query });
+	
+	res.json({
+		status: 200,
+		message: "success",
+		result,
+	});
+};
+
+module.exports = { ownRecipesGet };

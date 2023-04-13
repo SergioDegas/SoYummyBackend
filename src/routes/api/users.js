@@ -3,6 +3,7 @@ const router = express.Router();
 const { isBodyNotEmpty, schemaValidator, authenticate, uploadCloud } = require("../../middlewares");
 const subscribe = require("../../controllers/subscribe/subscribe")
 
+const {ownRecipesGet} = require("../../controllers/getOwnRecipes");
 const {
 	getShoppingList,
 	updateShoppingList,
@@ -21,5 +22,7 @@ router.post("/logout", schemaValidator, authenticate, logout);
 router.get("/favorites", authenticate, getFavoriteRecipes);
 router.patch("/favorites", authenticate, isBodyNotEmpty(), updateFavoriteRecipe)
 router.patch("/subscription", authenticate, subscribe);
+
+router.get("/own-recipes", authenticate, schemaValidator, ownRecipesGet);
 
 module.exports = router;

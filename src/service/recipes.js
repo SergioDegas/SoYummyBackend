@@ -2,7 +2,14 @@ const { mongoose } = require("mongoose");
 const { Recipe } = require("../models");
 
 const getRecipesByCategory = async (category, skip, limit) => {
-	return await Recipe.find({ category }, "title thumb").sort({ updatedAt: "descending" }).skip(skip).limit(limit);
+	const recipes = await Recipe.find({ category }, "title thumb")
+		.sort({ updatedAt: "descending" })
+		.skip(skip)
+		.limit(limit);
+	const total = await Recipe.find({ category }).countDocuments();
+	const totalPages = Math.ceil(total / limit);
+
+	return { recipes, totalPages };
 };
 
 const getRecipeById = async (recipeId) => {
@@ -33,15 +40,28 @@ const getRecipeById = async (recipeId) => {
 };
 
 const getRecipesBySet = async (skip, limit) => {
-	return await Recipe.aggregate([
-		{ $sort: { category: 1, updatedAt: -1 } },
-		{ $group: { _id: "$category", recipes: { $push: { title: "$title", thumb: "$thumb", _id: "$_id" } } } },
-		{ $sort: { _id: 1 } },
-		{ $skip: skip },
-		{ $limit: limit },
-		{ $project: { recipes: { $slice: ["$recipes", 4] } } },
+	const data = await Recipe.aggregate([
+		{
+			$facet: {
+				data: [
+					{ $sort: { category: 1, updatedAt: -1 } },
+					{ $group: { _id: "$category", recipes: { $push: { title: "$title", thumb: "$thumb", _id: "$_id" } } } },
+					{ $sort: { _id: 1 } },
+					{ $project: { recipes: { $slice: ["$recipes", 4] } } },
+					{ $skip: skip },
+					{ $limit: limit },
+				],
+				total: [{ $group: { _id: "$category" } }, { $count: "totalPages" }],
+			},
+		},
 	]);
+
+	const result = data[0]?.data;
+	const totalPages = Math.ceil(data[0].total[0].totalPages / limit);
+
+	return { result, totalPages };
 };
+
 const getPopularRecipes = async () =>
 	await Recipe.aggregate([
 		{
@@ -50,10 +70,13 @@ const getPopularRecipes = async () =>
 		{
 			$sort: { favoritesCount: -1 },
 		},
+		{
+			$limit: 4,
+		},
 		{ $unset: "favoritesCount" },
 	]);
 
-	const removeRecipeFromFavorites = async ({ userId, recipeId }) =>
+const removeRecipeFromFavorites = async ({ userId, recipeId }) =>
 	await Recipe.findByIdAndUpdate(recipeId, { $pull: { favorites: userId } });
 
 const addRecipeToFavorites = async ({ userId, recipeId }) =>
@@ -68,4 +91,5 @@ module.exports = {
 	getRecipesBySet,
 	removeRecipeFromFavorites,
 	addRecipeToFavorites,
+	getPopularRecipes,
 };

@@ -1,23 +1,22 @@
-const {search} = require("../../service");
-const { httpError } = require("../../helpers");
+const { search } = require("../../service");
 
 const getSearch = async (req, res) => {
 	const { searchTerm, page, limit, searchBy } = req.query;
 	const recipes = await search.searchService(searchTerm, page, limit, searchBy);
-  
+
 	if (!recipes || recipes.length === 0) {
-		return res.status(200).json({
+		return res.json({
+			status: 200,
+			message: "success",
+			data: { recipes: [] },
+		});
+	}
+
+	res.json({
 		status: 200,
 		message: "success",
-		data: { recipes: [] },
-	  });
-	  }
-  
-	res.status(200).json({
-	  status: 200,
-	  message: "success",
-	  data: { recipes: recipes },
+		data: { recipes },
 	});
-  };
-  
-  module.exports = { getSearch };
+};
+
+module.exports = { getSearch };
