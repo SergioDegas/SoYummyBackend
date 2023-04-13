@@ -1,5 +1,5 @@
 const { httpError } = require("../../helpers");
-const { User } = require("../../models/user");
+const {User} = require('../../models')
 
 const verifyEmail = async (req, res) => {
   const { verificationToken } = req.params;
