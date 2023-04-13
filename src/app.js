@@ -24,8 +24,6 @@ app.use("/search", searchRouter);
 app.use("/ownRecipes", ownRecipesRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use("/", subscribe)
-
 
 app.use((req, res) => {
 	res.status(404).json({ message: "Not found" });
