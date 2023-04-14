@@ -10,8 +10,8 @@ const {
 	logout,
 	getFavoriteRecipes,
 	updateFavoriteRecipe,
-  resendVerifyEmail,
-  verifyEmail,
+	resendVerifyEmail,
+	verifyEmail,
 } = require('../../controllers/users');
 
 router.get('/shopping-list', authenticate, getShoppingList);
@@ -21,8 +21,8 @@ router.put('/update', authenticate, uploadCloud('avatars'), updateUserData);
 router.post('/logout', schemaValidator, authenticate, logout);
 router.get('/favorites', authenticate, getFavoriteRecipes);
 router.patch('/favorites', authenticate, isBodyNotEmpty(), updateFavoriteRecipe);
-router.post("/verify", schemaValidator, resendVerifyEmail);
-router.get("/verify/:verificationToken", verifyEmail);
+router.post('/verify', schemaValidator, resendVerifyEmail);
+router.get('/verify/:verificationToken', verifyEmail);
 
 router.get('/own-recipes', authenticate, schemaValidator, ownRecipesGet);
 

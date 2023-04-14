@@ -14,8 +14,7 @@ module.exports = {
 	updateUserData: ctrlWrapper(updateUserData),
 	logout: ctrlWrapper(logout),
 	getFavoriteRecipes: ctrlWrapper(getFavoriteRecipes),
-  updateFavoriteRecipe: ctrlWrapper(updateFavoriteRecipe),
-  verifyEmail: ctrlWrapper(verifyEmail),
-  resendVerifyEmail: ctrlWrapper(resendVerifyEmail),
+	updateFavoriteRecipe: ctrlWrapper(updateFavoriteRecipe),
+	verifyEmail: ctrlWrapper(verifyEmail),
+	resendVerifyEmail: ctrlWrapper(resendVerifyEmail),
 };
-

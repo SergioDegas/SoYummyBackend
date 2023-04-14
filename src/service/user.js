@@ -1,5 +1,6 @@
 const { User, Recipe, Ingredient } = require('../models');
 const { mongoose } = require('mongoose');
+const { uid } = require('uid');
 
 const removeFromShoppingList = async ({ userId, id }) => {
 	await User.findByIdAndUpdate(userId, { $pull: { shoppingList: { id } } });
@@ -84,6 +85,24 @@ const addRecipeToFavorites = async ({ userId, recipeId }) =>
 		},
 	});
 
+const findUser = async (data) => await User.findOne(data);
+
+const updateUser = async (id, data) => await User.findByIdAndUpdate(id, data);
+
+const userCreate = async (data) => {
+	const { name, email, password } = data;
+	const verificationToken = uid();
+	const newUser = await User.create({
+		name,
+		email,
+		password,
+		verificationToken: verificationToken,
+	});
+	await newUser.setPassword(password);
+	await newUser.save();
+	return newUser;
+};
+
 module.exports = {
 	getShoppingList,
 	addToShoppingList,
@@ -92,4 +111,7 @@ module.exports = {
 	getFavoriteRecipes,
 	removeRecipeFromFavorites,
 	addRecipeToFavorites,
+	findUser,
+	updateUser,
+	userCreate,
 };

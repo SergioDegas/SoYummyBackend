@@ -1,18 +1,16 @@
-const { User } = require('../../models');
+const { user } = require('../../service');
 
 const updateUserData = async (req, res) => {
 	const id = req.user._id;
 	const { name } = req.body;
 	if (req.file) {
-		await User.findByIdAndUpdate(id, { name: name, avatarURL: req.file.path });
+		await user.updateUser(id, { name: name, avatarURL: req.file.path });
 	} else {
-		await User.findByIdAndUpdate(id, { name: name });
+		await user.updateUser(id, { name: name });
 	}
-
-	res.json({
+	res.status(200).json({
 		status: 200,
 		message: 'success',
-		// user: newUser,
 	});
 };
 
