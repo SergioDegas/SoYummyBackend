@@ -1,31 +1,31 @@
 const jwt = require('jsonwebtoken');
-const { User } = require('../../models');
+const { user } = require('../../service');
 require('dotenv').config();
 
 const { SECRET_KEY } = process.env;
 
 const login = async (req, res) => {
 	const { email, password } = req.body;
-	const user = await User.findOne({ email });
-	if (!user || !user.comparePassword(password)) {
+	const responce = await user.findUser({ email: email });
+	if (!responce || !responce.comparePassword(password)) {
 		res.status(401).json({ status: 401, message: 'Email or password is wrong' });
 	}
 
 	const payload = {
-		id: user._id,
-		email,
+		id: responce._id,
+		email: email,
 	};
 	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
-	await User.findByIdAndUpdate(user._id, { token });
+	await user.updateUser(responce._id, { token });
 
 	res.json({
 		token: token,
 		user: {
-			id: user._id,
-			name: user.name,
-			email: user.email,
-			avatar: user.avatarURL,
-			verifyEmail: user.verify,
+			id: responce._id,
+			name: responce.name,
+			email: responce.email,
+			avatar: responce.avatarURL,
+			verifyEmail: responce.verify,
 		},
 	});
 };

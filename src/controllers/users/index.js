@@ -4,6 +4,8 @@ const { ctrlWrapper } = require('../../helpers');
 const updateUserData = require('./updateUserData');
 const logout = require('./logout');
 const { getFavoriteRecipes, updateFavoriteRecipe } = require('./favoriteRecipes');
+const verifyEmail = require('./verifyEmail');
+const resendVerifyEmail = require('./resendVerifyEmail');
 
 module.exports = {
 	current: ctrlWrapper(current),
@@ -13,4 +15,6 @@ module.exports = {
 	logout: ctrlWrapper(logout),
 	getFavoriteRecipes: ctrlWrapper(getFavoriteRecipes),
 	updateFavoriteRecipe: ctrlWrapper(updateFavoriteRecipe),
+	verifyEmail: ctrlWrapper(verifyEmail),
+	resendVerifyEmail: ctrlWrapper(resendVerifyEmail),
 };
