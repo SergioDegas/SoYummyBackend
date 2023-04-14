@@ -12,10 +12,10 @@ const resendVerifyEmail = async (req, res) => {
 	if (!email) {
 		res.status(400).json({ status: 400, message: 'missing required field email' });
 	}
-	if (!user) {
+	if (!responce) {
 		res.status(401).json({ status: 401, message: 'Email not found' });
 	}
-	if (user.verify) {
+	if (responce.verify) {
 		res.status(400).json({ status: 400, message: 'Verification has already been passed' });
 	}
 	const emailData = {
