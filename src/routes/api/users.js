@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { isBodyNotEmpty, schemaValidator, authenticate, uploadCloud } = require('../../middlewares');
 const { ownRecipesGet } = require('../../controllers/getOwnRecipes');
+const subscribe = require('../../controllers/subscribe/subscribe')
 const {
 	getShoppingList,
 	updateShoppingList,
@@ -23,6 +24,7 @@ router.get('/favorites', authenticate, getFavoriteRecipes);
 router.patch('/favorites', authenticate, isBodyNotEmpty(), updateFavoriteRecipe);
 router.post('/verify', schemaValidator, resendVerifyEmail);
 router.get('/verify/:verificationToken', verifyEmail);
+router.patch("/subscription", authenticate, subscribe);
 
 router.get('/own-recipes', authenticate, schemaValidator, ownRecipesGet);
 
