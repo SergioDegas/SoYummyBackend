@@ -6,26 +6,27 @@ const { SECRET_KEY } = process.env;
 
 const login = async (req, res) => {
 	const { email, password } = req.body;
-	const responce = await user.findUser({ email: email });
-	if (!responce || !responce.comparePassword(password)) {
+	const response = await user.findUser({ email });
+	if (!response || !response.comparePassword(password)) {
 		res.status(401).json({ status: 401, message: 'Email or password is wrong' });
 	}
-
+	const { _id: id, name, avatarURL: avatar, verify: verifyEmail, favoriteRecipes } = response;
 	const payload = {
-		id: responce._id,
-		email: email,
+		id,
+		email,
 	};
 	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
-	await user.updateUser(responce._id, { token });
+	await user.updateUser(id, { token });
 
 	res.json({
-		token: token,
+		token,
 		user: {
-			id: responce._id,
-			name: responce.name,
-			email: responce.email,
-			avatar: responce.avatarURL,
-			verifyEmail: responce.verify,
+			id,
+			name,
+			email,
+			avatar,
+			verifyEmail,
+			favoriteRecipes,
 		},
 	});
 };
