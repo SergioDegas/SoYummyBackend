@@ -26,10 +26,10 @@ The API docs created using [Swagger](https://swagger.io)
 1. Clone the repository: `git clone https://github.com/SergioDegas/SoYummyBackend`
 2. Make sure you have an LTS version of Node.js installed on your computer. [Download and install](https://nodejs.org/en/) if needed.
 3. Install the project's base dependencies with the `npm install` command.
-4. Scripts: `npm start` - server start in production mode
-          `npm run start:dev` - server start in development mode
-          `npm run lint` - run an eslint code check
-          `lint:fix` - eslint code check with automatic fix for simple errors
+4. Scripts: - `npm start` - server start in production mode
+          - `npm run start:dev` - server start in development mode
+          - `npm run lint` - run an eslint code check
+          - `lint:fix` - eslint code check with automatic fix for simple errors
 
 Server is deployed using [Render.com](https://render.com)
 
